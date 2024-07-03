@@ -1,0 +1,30 @@
+{
+  "issues": [
+    {
+      "fields": {
+        "assignee": {
+          "key": "JIRAUSER20908"
+        },
+        "issuetype": {
+          "id": "11603"
+        },
+        "creator": {
+          "key": "JIRAUSER20908"
+        },
+        "labels": [
+          "WordPress-Plugin",
+          "WordPress-Update"
+        ],
+        "reporter": {
+          "key": "JIRAUSER20908"
+        },
+        "project": {
+          "id": "18702",
+          "key": "DESSO"
+        },
+        "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
+        "summary": "Short, descriptive title for the new ticket."
+      }
+    }
+  ]
+}
