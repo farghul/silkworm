@@ -15,9 +15,13 @@ type Links struct {
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Base   string `json:"base"`
-	Token  string `json:"token"`
-	Source string `json:"source"`
+	Base    string `json:"base"`
+	Path    string `json:"path"`
+	Token   string `json:"token"`
+	Human   string `json:"human"`
+	Issue   string `json:"issue"`
+	Team    string `json:"team"`
+	Project string `json:"project"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
@@ -70,7 +74,7 @@ type Post struct {
 
 const (
 	header string = "\nh2. Changelog\n"
-	bv     string = "2.0"
+	bv     string = "1.0"
 	halt   string = "program halted"
 )
 
@@ -85,10 +89,8 @@ var (
 	post      Post
 	title     Desso
 	versions  = [1][2]string{{".", "-"}}
-	common    = hmdr + "/Documents/common/"
-	self      = hmdr + "/Github/silkworm/"
-	jsons     = []string{self + "jsons/body.json", self + "jsons/filters.json", self + "jsons/links.json", self + "jsons/jira.json"}
-	temp      = []string{common + "temp/grep.txt", common + "temp/scrape.txt"}
+	jsons     = []string{jira.Path + "jsons/ticket.json", jira.Path + "jsons/filters.json", jira.Path + "jsons/links.json", jira.Path + "jsons/jira.json"}
+	temp      = []string{jira.Path + "temp/grep.txt", jira.Path + "temp/scrape.txt"}
 	deletions = []string{
 		"<br />", "</h1>", "</h2>",
 		"</h3>", "</h4>", "</li>",
