@@ -12,17 +12,17 @@ import (
 )
 
 var (
-	flag    = os.Args
-	hmdr, _ = os.UserHomeDir()
-	satis   strings.Builder
-	managed strings.Builder
+	flag = os.Args
+	// hmdr, _ = os.UserHomeDir()
+	// satis   strings.Builder
+	// managed strings.Builder
 )
 
 // Empty the contents a folder
 func clearout(path string) {
 	list := ls(path)
 	for _, file := range list {
-		cleanup(path + file)
+		sweep(path + file)
 	}
 }
 
@@ -46,7 +46,7 @@ func serialize() {
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {
-	goals := read(common + "updates.txt")
+	goals := read(jira.Source)
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)
@@ -77,11 +77,11 @@ func engine(i int, updates []string) {
 			/* Create Jira ticket using Description & Summary */
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
-			// body, _ := json.Marshal(post)
-			// execute("-e", "curl", "-D-", "-X", "POST", "-d", string(body), "-H", "Authorization: Bearer "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"issue/")
+			body, _ := json.Marshal(post)
+			execute("-e", "curl", "-X", "POST", "-d", string(body), "-H", "'Authorization: Basic "+jira.Token+"'", "-H", "'Content-Type: application/json'", jira.Base+"issue/")
 
-			// apiget(updates[i])
-			// addsql(title.Issues[0].Key, updates[i])
+			apiget(updates[i])
+			addsql(title.Issues[0].Key, updates[i])
 		}
 	}
 }
@@ -89,7 +89,7 @@ func engine(i int, updates []string) {
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
 	/* Actual command for quering the Jira API */
-	result := execute("-c", "curl", "-X", "GET", "-H", "Authorization: Bearer "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"search?jql=summary~%27"+ticket+"%27")
+	result := execute("-c", "curl", "-X", "GET", "-H", "'Authorization: Basic "+jira.Token+"'", "-H", "'Content-Type: application/json'", jira.Base+"search?jql=summary~%27"+ticket+"%27")
 	json.Unmarshal(result, &title)
 }
 
@@ -162,7 +162,8 @@ func eventfilter() {
 
 // Select data from the jira.db database
 func selectsql(query, ticket string) string {
-	db, err := sql.Open("sqlite3", common+"jira.db")
+	db, err := sql.Open("sqlite3", jira.Path+"jira.db")
+	inspect(err)
 	rows, err := db.Query(query, ticket)
 	inspect(err)
 	defer rows.Close()
@@ -183,7 +184,7 @@ func selectsql(query, ticket string) string {
 // Add an entry to the jira.db database
 func addsql(ticket, title string) {
 	// Open the database, creating it if it doesn't exist
-	db, err := sql.Open("sqlite3", common+"jira.db")
+	db, err := sql.Open("sqlite3", jira.Path+"jira.db")
 	inspect(err)
 	defer db.Close()
 

@@ -22,6 +22,7 @@ type Atlassian struct {
 	Issue   string `json:"issue"`
 	Team    string `json:"team"`
 	Project string `json:"project"`
+	Source  string `json:"source"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
