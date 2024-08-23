@@ -3,24 +3,24 @@
     {
       "fields": {
         "assignee": {
-          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
+          "key": "ID of user assigned to ticket"
         },
         "issuetype": {
-          "id": "10036"
+          "id": "Type ID"
         },
         "creator": {
-          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
+          "key": "ID of the user creating the ticket"
         },
         "labels": [
-          "WordPress-Plugin",
-          "WordPress-Update"
+          "Tag 1",
+          "Tag 2"
         ],
         "reporter": {
-          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
+          "key": "ID of the user reporting the issue"
         },
         "project": {
-          "id": "10100",
-          "key": "DESSO"
+          "id": "Project ID",
+          "key": "Project Name"
         },
         "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
         "summary": "Short, descriptive title for the new ticket."
