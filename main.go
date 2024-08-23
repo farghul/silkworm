@@ -13,7 +13,7 @@ func main() {
 			about()
 		}
 	} else {
-		clearout(common + "temp/")
+		clearout(jira.Path + "temp/")
 		message("Creating tickets")
 		serialize()
 		sifter()

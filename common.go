@@ -6,13 +6,6 @@ import (
 	"os/exec"
 )
 
-// Download the update file produced from Platypus using SCP (requires VPN)
-func secopy() {
-	message("Downloading the list of avaiable updates")
-	destination := common + "updates.txt"
-	execute("-e", "scp", jira.Source, destination)
-}
-
 // Write a passed variable to a named file
 func document(name string, d []byte) {
 	inspect(os.WriteFile(name, d, 0666))
@@ -71,6 +64,11 @@ func expose(file string) *os.File {
 	return outcome
 }
 
+// Remove files or directories
+func sweep(cut ...string) {
+	inspect(os.Remove(cut[0.]))
+}
+
 // Provide and highlight informational messages
 func message(message string) {
 	fmt.Println("\n**", message, "**")
@@ -98,11 +96,6 @@ func about() {
 	fmt.Println("  -v, --version", "	Display App Version")
 	fmt.Println("\nHelp:")
 	fmt.Println("  For more information go to:")
-	fmt.Println("    https://github.com/nausicaan/silkworm.git")
+	fmt.Println("    https://github.com/farghul/silkworm.git")
 	fmt.Println()
-}
-
-// Remove files or directories
-func cleanup(cut ...string) {
-	inspect(os.Remove(cut[0.]))
 }
