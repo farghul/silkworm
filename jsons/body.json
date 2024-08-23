@@ -3,23 +3,23 @@
     {
       "fields": {
         "assignee": {
-          "key": "JIRAUSER20908"
+          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
         },
         "issuetype": {
-          "id": "11603"
+          "id": "10036"
         },
         "creator": {
-          "key": "JIRAUSER20908"
+          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
         },
         "labels": [
           "WordPress-Plugin",
           "WordPress-Update"
         ],
         "reporter": {
-          "key": "JIRAUSER20908"
+          "key": "712020:317e7047-9a0c-4c27-8b39-796ffca5c709"
         },
         "project": {
-          "id": "18702",
+          "id": "10100",
           "key": "DESSO"
         },
         "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",

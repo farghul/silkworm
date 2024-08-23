@@ -13,7 +13,9 @@ A `jira.json` file containing your API URL and Bearer token to enable ticket cre
 ``` go
 {
     "base": "Jira Issue base URL",
-    "token": "Jira Bearer Token"
+    "path": "Path to necessary folders",
+    "user": "Username or ID",
+    "token": "Jira Basic Token"
 }
 ```
 
