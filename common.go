@@ -18,8 +18,9 @@ func execute(variation, task string, args ...string) []byte {
 	case "-e":
 		exec.Command(task, args...).CombinedOutput()
 	case "-c":
-		both, _ := osCmd.CombinedOutput()
-		return both
+		result, err := osCmd.Output()
+		inspect(err)
+		return result
 	case "-v":
 		osCmd.Stdout = os.Stdout
 		osCmd.Stderr = os.Stderr
@@ -62,6 +63,14 @@ func expose(file string) *os.File {
 	outcome, err := os.Open(file)
 	inspect(err)
 	return outcome
+}
+
+// Empty the contents a folder
+func clearout(path string) {
+	list := ls(path)
+	for _, file := range list {
+		sweep(path + file)
+	}
 }
 
 // Remove files or directories

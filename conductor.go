@@ -2,9 +2,7 @@ package main
 
 import (
 	"bytes"
-	"database/sql"
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 
@@ -17,14 +15,6 @@ var (
 	// satis   strings.Builder
 	// managed strings.Builder
 )
-
-// Empty the contents a folder
-func clearout(path string) {
-	list := ls(path)
-	for _, file := range list {
-		sweep(path + file)
-	}
-}
 
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
@@ -61,8 +51,12 @@ func sifter() {
 // Iterate through the updates array and assign plugin and ticket values
 func engine(i int, updates []string) {
 	if len(updates[i]) > 25 {
-		if selectsql("SELECT title FROM completed WHERE title = ?", updates[i]) != updates[i] {
-			firstsplit := strings.Split(updates[i], "/")
+
+		/* See if the ticket already exists */
+		firstsplit := strings.Split(updates[i], "/")
+		apiget(firstsplit[1])
+
+		if len(title.Issues) == 0 {
 			repo = firstsplit[0]
 			secondsplit := strings.Split(firstsplit[1], ":")
 			label = secondsplit[0]
@@ -72,16 +66,16 @@ func engine(i int, updates []string) {
 			changelog := append([]byte(header), content...)
 
 			/* Temporary print to console */
-			fmt.Println(string(changelog))
+			// fmt.Println(string(changelog))
 
 			/* Create Jira ticket using Description & Summary */
-			post.Fields.Description = string(changelog)
-			post.Fields.Summary = updates[i]
+			post.Issues[0].Fields.Description = string(changelog)
+			post.Issues[0].Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-e", "curl", "-X", "POST", "-d", string(body), "-H", "'Authorization: Basic "+jira.Token+"'", "-H", "'Content-Type: application/json'", jira.Base+"issue/")
+			execute("-e", "curl", "-X", "POST", "-d", string(body), "-H", "Authorization: Basic "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"issue/")
 
-			apiget(updates[i])
-			addsql(title.Issues[0].Key, updates[i])
+			/* Get the new tickets summary field */
+			apiget(firstsplit[1])
 		}
 	}
 }
@@ -89,7 +83,7 @@ func engine(i int, updates []string) {
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
 	/* Actual command for quering the Jira API */
-	result := execute("-c", "curl", "-X", "GET", "-H", "'Authorization: Basic "+jira.Token+"'", "-H", "'Content-Type: application/json'", jira.Base+"search?jql=summary~%27"+ticket+"%27")
+	result := execute("-c", "curl", "-X", "GET", "-H", "Authorization: Basic "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"search?jql=summary%20~%20"+ticket)
 	json.Unmarshal(result, &title)
 }
 
@@ -158,45 +152,4 @@ func eventfilter() {
 	document(temp[0], content)
 	content = execute("-c", "sed", "1,3d", temp[0])
 	content = append([]byte("h3. "+version+"\n"), content...)
-}
-
-// Select data from the jira.db database
-func selectsql(query, ticket string) string {
-	db, err := sql.Open("sqlite3", jira.Path+"jira.db")
-	inspect(err)
-	rows, err := db.Query(query, ticket)
-	inspect(err)
-	defer rows.Close()
-
-	var title string
-
-	for rows.Next() {
-		err := rows.Scan(&title)
-		inspect(err)
-	}
-
-	err = rows.Err()
-	inspect(err)
-
-	return title
-}
-
-// Add an entry to the jira.db database
-func addsql(ticket, title string) {
-	// Open the database, creating it if it doesn't exist
-	db, err := sql.Open("sqlite3", jira.Path+"jira.db")
-	inspect(err)
-	defer db.Close()
-
-	// Create a table if it doesn't exist
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS completed (id INTEGER PRIMARY KEY AUTOINCREMENT, ticket TEXT NOT NULL UNIQUE, title TEXT NOT NULL)`)
-	inspect(err)
-
-	// Insert a new entry
-	stmt, err := db.Prepare("INSERT INTO completed (desso, title) VALUES(?, ?)")
-	inspect(err)
-	defer stmt.Close()
-
-	_, err = stmt.Exec(ticket, title)
-	inspect(err)
 }
