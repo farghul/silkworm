@@ -14,7 +14,6 @@ func main() {
 		}
 	} else {
 		clearout(jira.Path + "temp/")
-		message("Creating tickets")
 		serialize()
 		sifter()
 	}
