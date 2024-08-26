@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
+	"time"
 )
 
 // Write a passed variable to a named file
@@ -78,10 +80,19 @@ func sweep(cut ...string) {
 	inspect(os.Remove(cut[0.]))
 }
 
-// Provide and highlight informational messages
-func message(message string) {
-	fmt.Println("\n**", message, "**")
+// Record a message to the log file
+func journal(message string) {
+	now := time.Now()
+	file, err := os.OpenFile("logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	inspect(err)
+	log.SetOutput(file)
+	log.Println(message + now.String())
 }
+
+// Provide and highlight informational messages
+// func message(message string) {
+// 	fmt.Println("\n**", message, "**")
+// }
 
 // Print a colourized error message
 func alert(message string) {

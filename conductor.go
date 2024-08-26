@@ -54,7 +54,7 @@ func engine(i int, updates []string) {
 		firstsplit := strings.Split(updates[i], "/")
 		apiget(firstsplit[1])
 
-		if len(desso.Key) == 0 {
+		if desso.Key == firstsplit[1] {
 			repo = firstsplit[0]
 			secondsplit := strings.Split(firstsplit[1], ":")
 			label = secondsplit[0]
@@ -68,9 +68,9 @@ func engine(i int, updates []string) {
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
 			document(jira.Path+"temp/data.txt", body)
-			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", "@"+jira.Path+"temp/data.txt", "-H", "Content-Type: application/json", jira.Base+"issue")
+			// execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", "@"+jira.Path+"temp/data.txt", "-H", "Content-Type: application/json", jira.Base+"issue")
 			apiget(firstsplit[1])
-			message("Jira ticket " + string(desso.Key) + " created")
+			journal("Jira ticket " + desso.Key + " created at ")
 		}
 	}
 }

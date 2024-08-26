@@ -47,9 +47,6 @@ type Desso struct {
 
 type Post struct {
 	Fields struct {
-		Assignee struct {
-			AccountID string `json:"accountId"`
-		} `json:"assignee"`
 		Issuetype struct {
 			Self string `json:"self"`
 			ID   string `json:"id"`
