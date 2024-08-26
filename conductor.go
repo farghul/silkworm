@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"os"
 	"strings"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 var (
@@ -56,7 +54,7 @@ func engine(i int, updates []string) {
 		firstsplit := strings.Split(updates[i], "/")
 		apiget(firstsplit[1])
 
-		if len(title.Issues) == 0 {
+		if len(desso.Key) == 0 {
 			repo = firstsplit[0]
 			secondsplit := strings.Split(firstsplit[1], ":")
 			label = secondsplit[0]
@@ -65,17 +63,14 @@ func engine(i int, updates []string) {
 			switchboard()
 			changelog := append([]byte(header), content...)
 
-			/* Temporary print to console */
-			// fmt.Println(string(changelog))
-
 			/* Create Jira ticket using Description & Summary */
-			post.Issues[0].Fields.Description = string(changelog)
-			post.Issues[0].Fields.Summary = updates[i]
+			post.Fields.Description = string(changelog)
+			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-e", "curl", "-X", "POST", "-d", string(body), "-H", "Authorization: Basic "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"issue/")
-
-			/* Get the new tickets summary field */
+			document(jira.Path+"temp/data.txt", body)
+			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", "@"+jira.Path+"temp/data.txt", "-H", "Content-Type: application/json", jira.Base+"issue")
 			apiget(firstsplit[1])
+			message("Jira ticket " + string(desso.Key) + " created")
 		}
 	}
 }
@@ -83,8 +78,8 @@ func engine(i int, updates []string) {
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
 	/* Actual command for quering the Jira API */
-	result := execute("-c", "curl", "-X", "GET", "-H", "Authorization: Basic "+jira.Token, "-H", "Content-Type: application/json", jira.Base+"search?jql=summary%20~%20"+ticket)
-	json.Unmarshal(result, &title)
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.Base+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
+	json.Unmarshal(result, &desso)
 }
 
 // Sort the query based on repository name
