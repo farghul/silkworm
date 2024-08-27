@@ -16,13 +16,13 @@ func serialize() {
 		inspect(err)
 		switch index {
 		case 0:
-			json.Unmarshal(data, &post)
-		case 1:
-			json.Unmarshal(data, &filter)
-		case 2:
-			json.Unmarshal(data, &link)
-		case 3:
 			json.Unmarshal(data, &jira)
+		case 1:
+			json.Unmarshal(data, &post)
+		case 2:
+			json.Unmarshal(data, &filter)
+		case 3:
+			json.Unmarshal(data, &link)
 		}
 	}
 }
@@ -74,7 +74,6 @@ func engine(i int, updates []string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	/* Command for quering the Jira API */
 	result := execute("-c", "curl", "--request", "GET", "--url", jira.Base+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
 	json.Unmarshal(result, &sre)
 }

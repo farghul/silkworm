@@ -93,8 +93,8 @@ var (
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{jira.Path + "temp/grep.txt", jira.Path + "temp/scrape.txt"}
-	jsons     = []string{jira.Path + "jsons/ticket.json", jira.Path + "jsons/filters.json", jira.Path + "jsons/links.json", jira.Path + "jsons/jira.json"}
+	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
+	jsons     = []string{"source/jira.json", "source/ticket.json", "jsons/filters.json", "jsons/links.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
@@ -104,7 +104,7 @@ var (
 		"<span>", "<entry>", "</entry>",
 		"</span>", "<footer>", "</footer>",
 	}
-	replacements = [12][2]string{
+	replacements = [13][2]string{
 		{"<em>", "*"},
 		{"</em>", "*"},
 		{"<li>", "- "},
