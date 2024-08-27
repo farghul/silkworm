@@ -19,7 +19,6 @@ type Atlassian struct {
 	Base    string `json:"base"`
 	Path    string `json:"path"`
 	Token   string `json:"token"`
-	Human   string `json:"human"`
 	Issue   string `json:"issue"`
 	Source  string `json:"source"`
 	Project string `json:"project"`
@@ -39,13 +38,15 @@ type Filters struct {
 }
 
 type Desso struct {
-	Key    string `json:"key"`
-	Fields struct {
-		Summary string `json:"summary"`
-	} `json:"fields"`
+	Issues []struct {
+		Key    string `json:"key"`
+		Fields struct {
+			Summary string `json:"summary"`
+		} `json:"fields"`
+	} `json:"issues"`
 }
 
-type Post struct {
+type Posts struct {
 	Fields struct {
 		Issuetype struct {
 			Self string `json:"self"`
@@ -82,13 +83,13 @@ const (
 )
 
 var (
-	post      Post
+	sre       Desso
+	post      Posts
 	link      Links
-	desso     Desso
-	content   []byte
 	label     string
 	repo      string
 	version   string
+	content   []byte
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
