@@ -7,12 +7,7 @@ import (
 	"strings"
 )
 
-var (
-	flag = os.Args
-	// hmdr, _ = os.UserHomeDir()
-	// satis   strings.Builder
-	// managed strings.Builder
-)
+var flag = os.Args
 
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
@@ -21,13 +16,13 @@ func serialize() {
 		inspect(err)
 		switch index {
 		case 0:
-			json.Unmarshal(data, &post)
-		case 1:
-			json.Unmarshal(data, &filter)
-		case 2:
-			json.Unmarshal(data, &link)
-		case 3:
 			json.Unmarshal(data, &jira)
+		case 1:
+			json.Unmarshal(data, &post)
+		case 2:
+			json.Unmarshal(data, &filter)
+		case 3:
+			json.Unmarshal(data, &link)
 		}
 	}
 }
@@ -54,7 +49,8 @@ func engine(i int, updates []string) {
 		firstsplit := strings.Split(updates[i], "/")
 		apiget(firstsplit[1])
 
-		if desso.Key == firstsplit[1] {
+		/* If not, create it */
+		if len(sre.Issues) == 0 {
 			repo = firstsplit[0]
 			secondsplit := strings.Split(firstsplit[1], ":")
 			label = secondsplit[0]
@@ -63,23 +59,23 @@ func engine(i int, updates []string) {
 			switchboard()
 			changelog := append([]byte(header), content...)
 
-			/* Create Jira ticket using Description & Summary */
+			// /* Create Jira ticket using Description & Summary */
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			document(jira.Path+"temp/data.txt", body)
-			// execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", "@"+jira.Path+"temp/data.txt", "-H", "Content-Type: application/json", jira.Base+"issue")
+			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.Base+"issue")
+
+			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
-			journal("Jira ticket " + desso.Key + " created at ")
+			journal("Jira ticket " + sre.Issues[0].Key + " created.")
 		}
 	}
 }
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	/* Actual command for quering the Jira API */
 	result := execute("-c", "curl", "--request", "GET", "--url", jira.Base+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
-	json.Unmarshal(result, &desso)
+	json.Unmarshal(result, &sre)
 }
 
 // Sort the query based on repository name

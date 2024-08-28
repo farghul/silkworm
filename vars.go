@@ -19,7 +19,6 @@ type Atlassian struct {
 	Base    string `json:"base"`
 	Path    string `json:"path"`
 	Token   string `json:"token"`
-	Human   string `json:"human"`
 	Issue   string `json:"issue"`
 	Source  string `json:"source"`
 	Project string `json:"project"`
@@ -39,13 +38,15 @@ type Filters struct {
 }
 
 type Desso struct {
-	Key    string `json:"key"`
-	Fields struct {
-		Summary string `json:"summary"`
-	} `json:"fields"`
+	Issues []struct {
+		Key    string `json:"key"`
+		Fields struct {
+			Summary string `json:"summary"`
+		} `json:"fields"`
+	} `json:"issues"`
 }
 
-type Post struct {
+type Posts struct {
 	Fields struct {
 		Issuetype struct {
 			Self string `json:"self"`
@@ -82,18 +83,18 @@ const (
 )
 
 var (
-	post      Post
+	sre       Desso
+	post      Posts
 	link      Links
-	desso     Desso
-	content   []byte
 	label     string
 	repo      string
 	version   string
+	content   []byte
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{jira.Path + "temp/grep.txt", jira.Path + "temp/scrape.txt"}
-	jsons     = []string{jira.Path + "jsons/ticket.json", jira.Path + "jsons/filters.json", jira.Path + "jsons/links.json", jira.Path + "jsons/jira.json"}
+	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
+	jsons     = []string{"source/jira.json", "source/ticket.json", "jsons/filters.json", "jsons/links.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
@@ -103,7 +104,7 @@ var (
 		"<span>", "<entry>", "</entry>",
 		"</span>", "<footer>", "</footer>",
 	}
-	replacements = [12][2]string{
+	replacements = [13][2]string{
 		{"<em>", "*"},
 		{"</em>", "*"},
 		{"<li>", "- "},
