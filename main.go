@@ -2,19 +2,18 @@ package main
 
 // Launch the program and execute according to the supplied flag
 func main() {
-	if len(flag) == 2 {
-		switch flag[1] {
-		case "-h", "--help":
-			about()
-		case "-v", "--version":
-			build()
-		default:
-			alert("Unknown argument(s) supplied -")
-			about()
-		}
-	} else {
+	var flag string = flags()
+
+	switch flag {
+	case "-p", "--plugin":
 		clearout(jira.Path + "temp/")
 		serialize()
 		sifter()
+	case "-h", "--help":
+		help()
+	case "-v", "--version":
+		build()
+	default:
+		alert("Unknown argument(s) supplied -")
 	}
 }

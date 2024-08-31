@@ -1,6 +1,6 @@
 # Silkworm
 
-Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and triggering *Bowerbird* with information recieved and tickets created.
+Silkworm is a Jira ticket creation tool for WordPress plugin updates. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and supplying *Bowerbird* with information via newly created tickets.
 
 ![Silkworm](cocoons.webp)
 
@@ -13,15 +13,15 @@ A `jira.json` file containing your API URL and Bearer token to enable ticket cre
 ``` go
 {
     "base": "Jira Issue base URL",
-    "path": "Path to necessary folders",
-    "user": "Username or ID",
-    "token": "Jira Basic Token"
+    "path": "Path to Silkworm application",
+    "source": "Location of the updates.txt file",
+    "token": "Email:Jira API Token combination with Base 64 Encoding"
 }
 ```
 
 ## Build
 
-From the root folder the `go` files, use the command that matches your environment:
+From the root folder containing `main.go`, use the command that matches your environment:
 
 ### Windows & Mac
 

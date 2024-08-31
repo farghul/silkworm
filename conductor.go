@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-var flag = os.Args
-
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
 	for index, element := range jsons {

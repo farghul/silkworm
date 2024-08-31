@@ -15,13 +15,13 @@ type Links struct {
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Team    string `json:"team"`
-	Base    string `json:"base"`
-	Path    string `json:"path"`
-	Token   string `json:"token"`
-	Issue   string `json:"issue"`
-	Source  string `json:"source"`
-	Project string `json:"project"`
+	// Team    string `json:"team"`
+	Base  string `json:"base"`
+	Path  string `json:"path"`
+	Token string `json:"token"`
+	// Issue  string `json:"issue"`
+	Source string `json:"source"`
+	// Project string `json:"project"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
@@ -77,9 +77,14 @@ type Posts struct {
 }
 
 const (
-	bv     string = "1.0"
-	halt   string = "program halted"
-	header string = "\nh2. Changelog\n"
+	bv       string = "1.1"
+	reset    string = "\033[0m"
+	bgred    string = "\033[41m"
+	green    string = "\033[32m"
+	yellow   string = "\033[33m"
+	bgyellow string = "\033[43m"
+	halt     string = "program halted"
+	header   string = "\nh2. Changelog\n"
 )
 
 var (
@@ -94,7 +99,7 @@ var (
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
 	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
-	jsons     = []string{"source/jira.json", "source/ticket.json", "jsons/filters.json", "jsons/links.json"}
+	jsons     = []string{"jsons/jira.json", "jsons/ticket.json", "jsons/filters.json", "jsons/links.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
