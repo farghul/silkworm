@@ -102,7 +102,7 @@ func journal(message string) {
 // Print a colourized error message
 func alert(message string) {
 	fmt.Println("\n", bgred, message, halt, reset)
-	fmt.Println(bgyellow, "Use -h for more detailed help information ")
+	fmt.Println("\n", bgyellow, "Use -h for more detailed help information ")
 	os.Exit(0)
 }
 
