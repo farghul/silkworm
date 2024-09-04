@@ -15,13 +15,10 @@ type Links struct {
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	// Team    string `json:"team"`
-	Base  string `json:"base"`
-	Path  string `json:"path"`
-	Token string `json:"token"`
-	// Issue  string `json:"issue"`
+	Base   string `json:"base"`
+	Path   string `json:"path"`
+	Token  string `json:"token"`
 	Source string `json:"source"`
-	// Project string `json:"project"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
