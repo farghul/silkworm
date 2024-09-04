@@ -108,7 +108,7 @@ func alert(message string) {
 
 // Display the build version of the program
 func build() {
-	fmt.Println("\n", yellow+"Silkworm", green+bv)
+	fmt.Println("\n", yellow+"Silkworm", green+bv, reset)
 }
 
 // Print help information for using the program
