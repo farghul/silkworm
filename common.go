@@ -116,6 +116,7 @@ func help() {
 	fmt.Println(yellow, "\nUsage:", reset)
 	fmt.Println("  [program] [flag]")
 	fmt.Println(yellow, "\nOptions:")
+	fmt.Println(green, " -c, --create", reset, "        Run the main program")
 	fmt.Println(green, " -h, --help", reset, "		Help Information")
 	fmt.Println(green, " -v, --version", reset, "	Display Program Version")
 	fmt.Println(yellow, "\nExample:", reset)

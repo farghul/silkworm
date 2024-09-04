@@ -5,7 +5,7 @@ func main() {
 	var flag string = flags()
 
 	switch flag {
-	case "-p", "--plugin":
+	case "-c", "--create":
 		clearout(jira.Path + "temp/")
 		serialize()
 		sifter()
