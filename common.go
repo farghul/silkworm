@@ -7,6 +7,18 @@ import (
 	"os/exec"
 )
 
+// Test for a proper flag
+func flags() string {
+	var flag string
+
+	if len(os.Args) == 1 {
+		flag = "--zero"
+	} else {
+		flag = os.Args[1]
+	}
+	return flag
+}
+
 // Write a passed variable to a named file
 func document(name string, d []byte) {
 	inspect(os.WriteFile(name, d, 0666))
@@ -89,26 +101,29 @@ func journal(message string) {
 
 // Print a colourized error message
 func alert(message string) {
-	fmt.Printf("\n%s %s\n", message, halt)
+	fmt.Println("\n", bgred, message, halt, reset)
+	fmt.Println("\n", bgyellow, "Use -h for more detailed help information ")
+	os.Exit(0)
 }
 
 // Display the build version of the program
 func build() {
-	fmt.Println("\nSilkworm", bv)
+	fmt.Println("\n", yellow+"Silkworm", green+bv, reset)
 }
 
 // Print help information for using the program
-func about() {
-	fmt.Println("\nUsage:")
+func help() {
+	fmt.Println(yellow, "\nUsage:", reset)
 	fmt.Println("  [program] [flag]")
-	fmt.Println("\nExample:")
+	fmt.Println(yellow, "\nOptions:")
+	fmt.Println(green, " -c, --create", reset, "        Run the main program")
+	fmt.Println(green, " -h, --help", reset, "		Help Information")
+	fmt.Println(green, " -v, --version", reset, "	Display Program Version")
+	fmt.Println(yellow, "\nExample:", reset)
 	fmt.Println("  Adding your path to file if necessary, run:")
-	fmt.Println("    silkworm")
-	fmt.Println("\nAdditional Options:")
-	fmt.Println("  -h, --help", "		Help Information")
-	fmt.Println("  -v, --version", "	Display App Version")
-	fmt.Println("\nHelp:")
+	fmt.Println(green, "    silkworm -p")
+	fmt.Println(yellow, "\nHelp:", reset)
 	fmt.Println("  For more information go to:")
-	fmt.Println("    https://github.com/farghul/silkworm.git")
-	fmt.Println()
+	fmt.Println(green, "   https://github.com/farghul/silkworm.git")
+	fmt.Println(reset)
 }

@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-var flag = os.Args
-
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
 	for index, element := range jsons {
@@ -34,7 +32,6 @@ func sifter() {
 	if len(updates) == 1 {
 		engine(0, updates)
 	} else {
-		updates = strings.Split(string(goals), "\n")
 		for i := 0; i < len(updates); i++ {
 			engine(i, updates)
 		}
@@ -59,7 +56,7 @@ func engine(i int, updates []string) {
 			switchboard()
 			changelog := append([]byte(header), content...)
 
-			// /* Create Jira ticket using Description & Summary */
+			/* Create Jira ticket using Description & Summary */
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
