@@ -1,6 +1,6 @@
 # Silkworm
 
-Silkworm is a Jira ticket creation tool for WordPress plugin updates. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and supplying *Bowerbird* with information via newly created tickets.
+Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and triggering *Bowerbird* with information recieved and tickets created.
 
 ![Silkworm](cocoons.webp)
 
@@ -13,9 +13,49 @@ A `jsons/jira.json` file containing your API URL and Basic token to enable ticke
 ``` json
 {
     "base": "Jira Issue base URL",
-    "path": "Path to Silkworm application",
-    "source": "Location of the updates.txt file",
-    "token": "Email:Jira API Token combination with Base 64 Encoding"
+    "path": "Path to necessary folders",
+    "user": "Username or ID",
+    "token": "Jira Basic Token"
+}
+```
+
+A `jsons/ticket.json` file containing your API URL and Basic token to enable ticket creation:
+
+``` json
+{
+  "fields": {
+    "assignee": {
+      "accountId": "Account ID of user assigned to ticket"
+    },
+    "issuetype": {
+      "self": "IssueType identity url",
+      "id": "IssueType ID",
+      "name": "IssueType name"
+    },
+    "labels": [
+      "Tag 1",
+      "Tag 2"
+    ],
+    "reporter": {
+      "self": "Reporters API identity url",
+      "accountId": "Reporters account ID",
+      "emailAddress": "Reporters email address"
+    },
+    "project": {
+      "self": "Project identity url",
+      "id": "Project ID",
+      "key": "Project short name",
+      "name": "Project long name",
+      "projectTypeKey": "Project Type name"
+    },
+    "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
+    "summary": "Short, descriptive title for the new ticket.",
+    "priority": {
+      "self": "Priority identity url",
+      "name": "Priority name",
+      "id": "Priority ID"
+    }
+  }
 }
 ```
 

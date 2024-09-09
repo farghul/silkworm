@@ -106,7 +106,7 @@ var (
 		"<span>", "<entry>", "</entry>",
 		"</span>", "<footer>", "</footer>",
 	}
-	replacements = [13][2]string{
+	replacements = [15][2]string{
 		{"<em>", "*"},
 		{"</em>", "*"},
 		{"<li>", "- "},
@@ -118,6 +118,9 @@ var (
 		{"<h4>", "h3. "},
 		{"<strong>", "*"},
 		{"</strong>", "*"},
+		{"&#8211;", " - "},
+		{"&#8216;", "'"},
+		{"&#8217;", "'"},
 		{"<li class=\"free\">", "- "},
 	}
 )
