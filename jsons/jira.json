@@ -1,0 +1,7 @@
+
+{
+    "base": "Jira Issue base URL",
+    "path": "Path to Silkworm application",
+    "source": "Location of the updates.txt file",
+    "token": "Email:Jira API Token combination with Base 64 Encoding"
+}

@@ -8,9 +8,9 @@ Silkworm is a Jira ticket creation tool for WordPress plugin updates. It's meant
 
 Googles' [Go language](https://go.dev) installed to enable building executables from source code.
 
-A `jira.json` file containing your API URL and Basic token to enable ticket creation:
+A `jsons/jira.json` file containing your API URL and Basic token to enable ticket creation:
 
-``` go
+``` json
 {
     "base": "Jira Issue base URL",
     "path": "Path to Silkworm application",
@@ -31,41 +31,28 @@ go build -o [name] .
 
 ### Linux
 
-```console
+``` console
 GOOS=linux GOARCH=amd64 go build -o [name] .
 ```
 
 ## Run
 
-```console
-[program] [optional flag]
+``` console
+[program] [flag]
 ```
 
-Example:
+## Options
 
-```console
-silkworm -h
+``` console
+-c, --create    Run the main program
+-h, --help      Help Information
+-v, --version   Display Program Version
 ```
 
-Output:
+## Example: 
 
-```console
-Usage: 
-  [program] [flag]
- 
-Options:
-  -c, --create          Run the main program
-  -h, --help            Help Information
-  -v, --version         Display Program Version
- 
-Example: 
-  Adding your path to file if necessary, run:
-     silkworm -c
- 
-Help: 
-  For more information go to:
-    https://github.com/farghul/silkworm.git
-
+``` console
+silkworm -c
 ```
 
 ## License
