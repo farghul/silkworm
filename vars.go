@@ -77,7 +77,7 @@ type Posts struct {
 }
 
 const (
-	bv     string = "1.0"
+	bv     string = "1.1"
 	halt   string = "program halted"
 	header string = "\nh2. Changelog\n"
 )
@@ -94,7 +94,7 @@ var (
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
 	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
-	jsons     = []string{"source/jira.json", "source/ticket.json", "jsons/filters.json", "jsons/links.json"}
+	jsons     = []string{"jsons/jira.json", "jsons/ticket.json", "jsons/filters.json", "jsons/links.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
@@ -104,7 +104,7 @@ var (
 		"<span>", "<entry>", "</entry>",
 		"</span>", "<footer>", "</footer>",
 	}
-	replacements = [13][2]string{
+	replacements = [15][2]string{
 		{"<em>", "*"},
 		{"</em>", "*"},
 		{"<li>", "- "},
@@ -116,6 +116,9 @@ var (
 		{"<h4>", "h3. "},
 		{"<strong>", "*"},
 		{"</strong>", "*"},
+		{"&#8211;", " - "},
+		{"&#8216;", "'"},
+		{"&#8217;", "'"},
 		{"<li class=\"free\">", "- "},
 	}
 )

@@ -8,9 +8,9 @@ Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge
 
 Googles' [Go language](https://go.dev) installed to enable building executables from source code.
 
-A `jira.json` file containing your API URL and Bearer token to enable ticket creation:
+A `jsons/jira.json` file containing your API URL and Basic token to enable ticket creation:
 
-``` go
+``` json
 {
     "base": "Jira Issue base URL",
     "path": "Path to necessary folders",
@@ -19,9 +19,49 @@ A `jira.json` file containing your API URL and Bearer token to enable ticket cre
 }
 ```
 
+A `jsons/ticket.json` file containing your API URL and Basic token to enable ticket creation:
+
+``` json
+{
+  "fields": {
+    "assignee": {
+      "accountId": "Account ID of user assigned to ticket"
+    },
+    "issuetype": {
+      "self": "IssueType identity url",
+      "id": "IssueType ID",
+      "name": "IssueType name"
+    },
+    "labels": [
+      "Tag 1",
+      "Tag 2"
+    ],
+    "reporter": {
+      "self": "Reporters API identity url",
+      "accountId": "Reporters account ID",
+      "emailAddress": "Reporters email address"
+    },
+    "project": {
+      "self": "Project identity url",
+      "id": "Project ID",
+      "key": "Project short name",
+      "name": "Project long name",
+      "projectTypeKey": "Project Type name"
+    },
+    "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
+    "summary": "Short, descriptive title for the new ticket.",
+    "priority": {
+      "self": "Priority identity url",
+      "name": "Priority name",
+      "id": "Priority ID"
+    }
+  }
+}
+```
+
 ## Build
 
-From the root folder the `go` files, use the command that matches your environment:
+From the root folder containing `main.go`, use the command that matches your environment:
 
 ### Windows & Mac
 
@@ -41,29 +81,17 @@ GOOS=linux GOARCH=amd64 go build -o [name] .
 [program] [optional flag]
 ```
 
-Example:
+## Options
 
 ``` console
-silkworm -h
+-h, --help      Help Information
+-v, --version   Display Program Version
 ```
 
-Output:
+## Example: 
 
 ``` console
-Usage:
-  [program] [flag]
-
-Example:
-  Adding your path to file if necessary, run:
-    silkworm
-
-Additional Options:
-  -h, --help 		Help Information
-  -v, --version 	Display App Version
-
-Help:
-  For more information go to:
-    https://github.com/farghul/silkworm.git
+silkworm -v
 ```
 
 ## License

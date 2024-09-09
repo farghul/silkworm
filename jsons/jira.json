@@ -1,0 +1,6 @@
+{
+    "base": "Jira Issue base URL",
+    "path": "Path to necessary folders",
+    "user": "Username or ID",
+    "token": "Jira Basic Token"
+}
