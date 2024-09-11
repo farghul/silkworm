@@ -8,18 +8,17 @@ Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge
 
 Googles' [Go language](https://go.dev) installed to enable building executables from source code.
 
-A `jsons/jira.json` file containing your API URL and Basic token to enable ticket creation:
+A `env.json` file containing your API URL and Basic token to enable ticket creation:
 
 ``` json
 {
     "base": "Jira Issue base URL",
-    "path": "Path to necessary folders",
-    "user": "Username or ID",
-    "token": "Jira Basic Token"
+    "token": "Jira Basic Token",
+    "source": "Path to the updates.txt file produced by Platypus"
 }
 ```
 
-A `jsons/ticket.json` file containing your API URL and Basic token to enable ticket creation:
+A `ticket.json` file containing your API URL and Basic token to enable ticket creation:
 
 ``` json
 {

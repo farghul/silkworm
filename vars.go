@@ -16,7 +16,6 @@ type Links struct {
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
 	Base   string `json:"base"`
-	Path   string `json:"path"`
 	Token  string `json:"token"`
 	Source string `json:"source"`
 }
@@ -80,6 +79,7 @@ const (
 	green    string = "\033[32m"
 	yellow   string = "\033[33m"
 	bgyellow string = "\033[43m"
+	target   string = "~/Shared/"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
 )
@@ -95,8 +95,8 @@ var (
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
-	jsons     = []string{"jsons/jira.json", "jsons/ticket.json", "jsons/filters.json", "jsons/links.json"}
+	temp      = []string{target + "temp/grep.txt", target + "temp/scrape.txt"}
+	jsons     = []string{target + "jsons/env.json", target + "jsons/ticket.json", target + "jsons/filters.json", target + "jsons/changes.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",

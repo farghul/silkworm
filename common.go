@@ -93,7 +93,7 @@ func sweep(cut ...string) {
 
 // Record a message to the log file
 func journal(message string) {
-	file, err := os.OpenFile(jira.Path+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile(target+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	inspect(err)
 	log.SetOutput(file)
 	log.Println(message)
@@ -121,7 +121,7 @@ func help() {
 	fmt.Println(green, " -v, --version", reset, "	Display Program Version")
 	fmt.Println(yellow, "\nExample:", reset)
 	fmt.Println("  Adding your path to file if necessary, run:")
-	fmt.Println(green, "    silkworm -p")
+	fmt.Println(green, "    silkworm -c")
 	fmt.Println(yellow, "\nHelp:", reset)
 	fmt.Println("  For more information go to:")
 	fmt.Println(green, "   https://github.com/farghul/silkworm.git")
