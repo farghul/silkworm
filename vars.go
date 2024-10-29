@@ -79,7 +79,6 @@ const (
 	green    string = "\033[32m"
 	yellow   string = "\033[33m"
 	bgyellow string = "\033[43m"
-	target   string = "~/Shared/"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
 )
@@ -95,8 +94,8 @@ var (
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{target + "temp/grep.txt", target + "temp/scrape.txt"}
-	jsons     = []string{target + "jsons/env.json", target + "jsons/ticket.json", target + "jsons/filters.json", target + "jsons/changes.json"}
+	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
+	jsons     = []string{"jsons/env.json", "jsons/ticket.json", "jsons/filters.json", "jsons/changes.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
