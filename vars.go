@@ -15,7 +15,7 @@ type Links struct {
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Base   string `json:"base"`
+	Cloud  string `json:"cloud"`
 	Token  string `json:"token"`
 	Source string `json:"source"`
 }
@@ -33,6 +33,7 @@ type Filters struct {
 	Event string `json:"event"`
 }
 
+// Desso builds the result of the API search
 type Desso struct {
 	Issues []struct {
 		Key    string `json:"key"`
@@ -42,6 +43,7 @@ type Desso struct {
 	} `json:"issues"`
 }
 
+// Posts builds the ticket information to send to Jira
 type Posts struct {
 	Fields struct {
 		Issuetype struct {
