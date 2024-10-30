@@ -12,7 +12,7 @@ A `env.json` file containing your API URL and Basic token to enable ticket creat
 
 ``` json
 {
-  "base": "Jira Issue base URL",
+  "cloud": "Jira Issue API base URL, ex. https://<domain>/rest/api/latest/",
   "token": "Jira Basic Token",
   "source": "Path to the updates.txt file produced by Platypus"
 }
