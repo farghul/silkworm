@@ -83,6 +83,7 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
+	home     string = "/data/scripts/go-programs/"
 )
 
 var (
@@ -96,8 +97,8 @@ var (
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{"temp/grep.txt", "temp/scrape.txt"}
-	jsons     = []string{"jsons/env.json", "jsons/ticket.json", "jsons/filters.json", "jsons/changes.json"}
+	temp      = []string{home + "temp/grep.txt", home + "temp/scrape.txt"}
+	jsons     = []string{home + "jsons/env.json", home + "jsons/ticket.json", home + "jsons/filters.json", home + "jsons/changes.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",

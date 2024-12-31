@@ -6,7 +6,7 @@ func main() {
 
 	switch flag {
 	case "-c", "--create":
-		clearout("temp/")
+		clearout(home + "temp/")
 		serialize()
 		sifter()
 	case "-h", "--help":
