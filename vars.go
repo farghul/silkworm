@@ -2,23 +2,24 @@ package main
 
 // Links builds a collection of urls to target changlogs
 type Links struct {
-	ACF       string `json:"acf"`
-	Calendar  string `json:"calendar"`
-	Gravity   string `json:"gravity"`
-	Poly      string `json:"poly"`
-	Spotlight string `json:"spotlight"`
-	Tickets   string `json:"tickets"`
-	Virtual   string `json:"virtual"`
-	WordPress string `json:"wordpress"`
-	WPExport  string `json:"wpexport"`
+	Changelogs []struct {
+		ACF       string `json:"acf"`
+		Calendar  string `json:"calendar"`
+		Gravity   string `json:"gravity"`
+		Poly      string `json:"poly"`
+		Spotlight string `json:"spotlight"`
+		Tickets   string `json:"tickets"`
+		Virtual   string `json:"virtual"`
+		WordPress string `json:"wordpress"`
+		WPExport  string `json:"wpexport"`
+	} `json:"changelogs"`
 }
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Cloud    string `json:"cloud"`
-	Token    string `json:"token"`
-	Source   string `json:"source"`
-	Programs string `json:"programs"`
+	Cloud  string `json:"cloud"`
+	Token  string `json:"token"`
+	Source string `json:"source"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
@@ -84,6 +85,7 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
+	assets   string = "/data/scripts/automation/programs/"
 )
 
 var (
@@ -97,8 +99,8 @@ var (
 	filter    Filters
 	access    Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{access.Programs + "temp/grep.txt", access.Programs + "temp/scrape.txt"}
-	jsons     = []string{access.Programs + "jsons/env.json", access.Programs + "jsons/ticket.json", access.Programs + "jsons/filters.json", access.Programs + "jsons/changes.json"}
+	temp      = []string{assets + "temp/grep.txt", assets + "temp/scrape.txt"}
+	jsons     = []string{assets + "jsons/env.json", assets + "jsons/new.json", assets + "jsons/filters.json", assets + "jsons/bundle.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",

@@ -6,7 +6,7 @@ func main() {
 
 	switch flag {
 	case "-c", "--create":
-		clearout(access.Programs + "temp/")
+		clearout(assets + "temp/")
 		serialize()
 		sifter()
 	case "-h", "--help":

@@ -1,0 +1,24 @@
+pipeline {
+    agent { label 'cactuar && deploy' }
+    stages {
+        stage('Git') {
+            steps {
+                sh 'cd /data/scripts/automation/repos/silkworm && git pull'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'GOOS=linux GOARCH=amd64 go build -o /data/scripts/automation/programs/silkworm .'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(2) {
+                        sh '/data/scripts/automation/programs/silkworm.sh'
+                    }
+                }
+            }
+        }
+    }
+}

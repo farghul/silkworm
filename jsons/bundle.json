@@ -1,0 +1,38 @@
+{
+    "credentials": [
+		{"polylang-pro": "Polylang Pro username","password": "Polylang Pro password"},
+		{"wp-all-export-pro": "WP All Export Pro username","password": "WP All Export Pro password"},
+		{"gravityforms": "Gravity Forms username","password": "Gravity Forms password"},
+		{"searchwp": "SearchWP username","password": "SearchWP password"}
+	],
+	"downloads":
+	{
+		"polylang-pro": "Polylang Pro direct download link",
+		"wp-all-export-pro": "WP All Export Pro direct download link",
+		"gravityforms": "Gravity Forms direct download link",
+		"searchwp": "SearchWP direct download link",
+		"events-calendar-pro": "Events Calendar Pro direct download link",
+		"event-tickets-plus": "Event Tickets Plus direct download link",
+		"events-virtual": "Events Virtual direct download link",
+		"uji-countdown-premium": "UJI Countdown Premium direct download link"
+	},
+	"logins":
+	{
+		"searchwp": "https://searchwp.com/account/",
+		"polylang-pro": "https://polylang.pro/account/",
+		"gravityforms": "https://www.gravityforms.com/wp-login.php",
+		"wp-all-export-pro": "https://www.wpallimport.com/portal/"
+	},
+	"changelogs":
+	{
+		"wordpress": "https://wordpress.org/plugins/",
+		"spotlight": "https://spotlightwp.com/changelog/",
+		"acf": "https://www.advancedcustomfields.com/changelog/",
+		"poly": "https://polylang.pro/downloads/polylang-pro/?changelog=1",
+		"gravity": "https://docs.gravityforms.com/gravityforms-change-log/",
+		"wpexport": "https://www.wpallimport.com/downloads/wp-all-export-pro/?changelog=1",
+		"virtual": "https://theeventscalendar.com/release-notes/virtual-events/virtual-events-",
+		"tickets": "https://theeventscalendar.com/release-notes/event-tickets-plus/event-tickets-plus-",
+		"calendar": "https://theeventscalendar.com/release-notes/events-calendar-pro/events-calendar-pro-"
+	}
+}

@@ -8,56 +8,7 @@ Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge
 
 Googles' [Go language](https://go.dev) installed to enable building executables from source code.
 
-A `env.json` file containing your API URL and Basic token to enable ticket creation:
-
-``` json
-{
-  "cloud": "Jira Issue API base URL, ex. https://<domain>/rest/api/latest/",
-  "token": "Jira Basic Token",
-  "source": "Path to the updates.txt file produced by Platypus",
-  "programs": "Root folder for Silkworm and its dependencies"
-}
-```
-
-A `ticket.json` file containing your API URL and Basic token to enable ticket creation:
-
-``` json
-{
-  "fields": {
-    "assignee": {
-      "accountId": "Account ID of user assigned to ticket"
-    },
-    "issuetype": {
-      "self": "IssueType identity url",
-      "id": "IssueType ID",
-      "name": "IssueType name"
-    },
-    "labels": [
-      "Tag 1",
-      "Tag 2"
-    ],
-    "reporter": {
-      "self": "Reporters API identity url",
-      "accountId": "Reporters account ID",
-      "emailAddress": "Reporters email address"
-    },
-    "project": {
-      "self": "Project identity url",
-      "id": "Project ID",
-      "key": "Project short name",
-      "name": "Project long name",
-      "projectTypeKey": "Project Type name"
-    },
-    "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
-    "summary": "Short, descriptive title for the new ticket.",
-    "priority": {
-      "self": "Priority identity url",
-      "name": "Priority name",
-      "id": "Priority ID"
-    }
-  }
-}
-```
+A `new.json` file to enable ticket creation, an `env.json` file to enable authorized querying, and a `bundle.json` file containing everything needed to aquire the Premium plugin update files (see `jsons` folder for reference). Note: Information in the `bundle.json` is shared between Silkworm and Bowerbird.
 
 ## Build
 

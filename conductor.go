@@ -84,12 +84,12 @@ func switchboard() {
 	case "bcgov-plugin":
 		premium(label)
 	case "freemius":
-		substitution(link.Spotlight, filter.OPH2+"v"+version+filter.ESP)
+		substitution(link.Changelogs[9].Spotlight, filter.OPH2+"v"+version+filter.ESP)
 	case "wpengine":
-		substitution(link.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
+		substitution(link.Changelogs[9].WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", temp[0])
 	default:
-		substitution(link.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
+		substitution(link.Changelogs[9].WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", temp[0])
 	}
 }
@@ -99,20 +99,20 @@ func premium(label string) {
 	v := bytes.ReplaceAll([]byte(version), []byte(versions[0][0]), []byte(versions[0][1]))
 	switch label {
 	case "events-calendar-pro":
-		substitution(link.Calendar+string(v)+"/", "/"+version+filter.Event)
+		substitution(link.Changelogs[9].Calendar+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "event-tickets-plus":
-		substitution(link.Tickets+string(v)+"/", "/"+version+filter.Event)
+		substitution(link.Changelogs[9].Tickets+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "events-virtual":
-		substitution(link.Virtual+string(v)+"/", "/"+version+filter.Event)
+		substitution(link.Changelogs[9].Virtual+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "gravityforms":
-		substitution(link.Gravity, filter.OPH3+version+filter.End)
+		substitution(link.Changelogs[9].Gravity, filter.OPH3+version+filter.End)
 	case "polylang-pro":
-		substitution(link.Poly, filter.OPH4+version+filter.End)
+		substitution(link.Changelogs[9].Poly, filter.OPH4+version+filter.End)
 	case "wp-all-export-pro":
-		substitution(link.WPExport, "/"+version+filter.CLH4)
+		substitution(link.Changelogs[9].WPExport, "/"+version+filter.CLH4)
 		content = execute("-c", "sed", "${/h3./d;}", temp[0])
 	}
 }
