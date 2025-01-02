@@ -6,7 +6,7 @@ func main() {
 
 	switch flag {
 	case "-c", "--create":
-		clearout(home + "temp/")
+		clearout(jira.Programs + "temp/")
 		serialize()
 		sifter()
 	case "-h", "--help":

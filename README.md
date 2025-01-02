@@ -14,7 +14,8 @@ A `env.json` file containing your API URL and Basic token to enable ticket creat
 {
   "cloud": "Jira Issue API base URL, ex. https://<domain>/rest/api/latest/",
   "token": "Jira Basic Token",
-  "source": "Path to the updates.txt file produced by Platypus"
+  "source": "Path to the updates.txt file produced by Platypus",
+  "programs": "Root folder for Silkworm and its dependencies"
 }
 ```
 

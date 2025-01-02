@@ -15,9 +15,10 @@ type Links struct {
 
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Cloud  string `json:"cloud"`
-	Token  string `json:"token"`
-	Source string `json:"source"`
+	Cloud    string `json:"cloud"`
+	Token    string `json:"token"`
+	Source   string `json:"source"`
+	Programs string `json:"programs"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
@@ -75,7 +76,7 @@ type Posts struct {
 }
 
 const (
-	bv       string = "1.1"
+	bv       string = "1.2"
 	reset    string = "\033[0m"
 	bgred    string = "\033[41m"
 	green    string = "\033[32m"
@@ -83,7 +84,6 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
-	home     string = "/data/scripts/go-programs/"
 )
 
 var (
@@ -97,8 +97,8 @@ var (
 	filter    Filters
 	jira      Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{home + "temp/grep.txt", home + "temp/scrape.txt"}
-	jsons     = []string{home + "jsons/env.json", home + "jsons/ticket.json", home + "jsons/filters.json", home + "jsons/changes.json"}
+	temp      = []string{jira.Programs + "temp/grep.txt", jira.Programs + "temp/scrape.txt"}
+	jsons     = []string{jira.Programs + "jsons/env.json", jira.Programs + "jsons/ticket.json", jira.Programs + "jsons/filters.json", jira.Programs + "jsons/changes.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
