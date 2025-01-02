@@ -95,10 +95,10 @@ var (
 	version   string
 	content   []byte
 	filter    Filters
-	jira      Atlassian
+	access    Atlassian
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{jira.Programs + "temp/grep.txt", jira.Programs + "temp/scrape.txt"}
-	jsons     = []string{jira.Programs + "jsons/env.json", jira.Programs + "jsons/ticket.json", jira.Programs + "jsons/filters.json", jira.Programs + "jsons/changes.json"}
+	temp      = []string{access.Programs + "temp/grep.txt", access.Programs + "temp/scrape.txt"}
+	jsons     = []string{access.Programs + "jsons/env.json", access.Programs + "jsons/ticket.json", access.Programs + "jsons/filters.json", access.Programs + "jsons/changes.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
