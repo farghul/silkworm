@@ -5,15 +5,15 @@ func main() {
 	var flag string = flags()
 
 	switch flag {
-	case "-c", "--create":
-		clearout(assets + "temp/")
-		serialize()
-		sifter()
 	case "-h", "--help":
 		help()
 	case "-v", "--version":
 		build()
+	case "--zero":
+		clearout(assets + "temp/")
+		serialize()
+		sifter()
 	default:
-		alert("Unknown argument(s) supplied -")
+		alert("Unknown argument(s) -")
 	}
 }

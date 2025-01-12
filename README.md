@@ -35,7 +35,6 @@ GOOS=linux GOARCH=amd64 go build -o [name] .
 ## Options
 
 ``` console
--c, --create    Run the main program
 -h, --help      Help Information
 -v, --version   Display Program Version
 ```
@@ -43,7 +42,7 @@ GOOS=linux GOARCH=amd64 go build -o [name] .
 ## Example: 
 
 ``` console
-silkworm -c
+silkworm
 ```
 
 ## License
