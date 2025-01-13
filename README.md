@@ -1,6 +1,6 @@
 # Silkworm
 
-Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and triggering *Bowerbird* with information recieved and tickets created.
+Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge the gap between [Platypus](https://github.com/farghul/platypus.git) and [Bowerbird](https://github.com/farghul/bowerbird.git), reading the output from *Platypus* and supplying *Bowerbird* with information recieved and tickets created.
 
 ![Silkworm](cocoons.webp)
 
@@ -8,7 +8,7 @@ Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge
 
 Googles' [Go language](https://go.dev) installed to enable building executables from source code.
 
-A `new.json` file to enable ticket creation, an `env.json` file to enable authorized querying, and a `bundle.json` file containing everything needed to aquire the Premium plugin update files (see `jsons` folder for reference). Note: Information in the `bundle.json` is shared between Silkworm and Bowerbird.
+A variety of json files to enable ticket creation, authorized querying, and changelog gathering (see `jsons` folder for reference).
 
 ## Build
 

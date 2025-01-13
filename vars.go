@@ -1,25 +1,23 @@
 package main
 
-// Links builds a collection of urls to target changlogs
-type Links struct {
-	Changelogs []struct {
-		ACF       string `json:"acf"`
-		Calendar  string `json:"calendar"`
-		Gravity   string `json:"gravity"`
-		Poly      string `json:"poly"`
-		Spotlight string `json:"spotlight"`
-		Tickets   string `json:"tickets"`
-		Virtual   string `json:"virtual"`
-		WordPress string `json:"wordpress"`
-		WPExport  string `json:"wpexport"`
-	} `json:"changelogs"`
-}
-
 // Atlassian builds a list of jira tokens and api addresses
 type Atlassian struct {
-	Cloud  string `json:"cloud"`
+	URL    string `json:"url"`
 	Token  string `json:"token"`
 	Source string `json:"source"`
+}
+
+// Changelogs builds a collection of urls to target changlogs
+type Changelogs struct {
+	ACF       string `json:"acf"`
+	Calendar  string `json:"calendar"`
+	Gravity   string `json:"gravity"`
+	Poly      string `json:"poly"`
+	Spotlight string `json:"spotlight"`
+	Tickets   string `json:"tickets"`
+	Virtual   string `json:"virtual"`
+	WordPress string `json:"wordpress"`
+	WPExport  string `json:"wpexport"`
 }
 
 // Filters builds the parameters for sed to execute on the scrapped.txt file
@@ -91,16 +89,16 @@ const (
 var (
 	sre       Desso
 	post      Posts
-	link      Links
 	label     string
 	repo      string
 	version   string
 	content   []byte
 	filter    Filters
-	access    Atlassian
+	jira      Atlassian
+	changes   Changelogs
 	versions  = [1][2]string{{".", "-"}}
 	temp      = []string{assets + "temp/grep.txt", assets + "temp/scrape.txt"}
-	jsons     = []string{assets + "jsons/env.json", assets + "jsons/new.json", assets + "jsons/filters.json", assets + "jsons/bundle.json"}
+	jsons     = []string{assets + "jsons/changelogs.json", assets + "jsons/filters.json", assets + "jsons/jira.json", assets + "jsons/new.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",

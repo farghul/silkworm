@@ -14,20 +14,20 @@ func serialize() {
 		inspect(err)
 		switch index {
 		case 0:
-			json.Unmarshal(data, &access)
+			json.Unmarshal(data, &jira)
 		case 1:
 			json.Unmarshal(data, &post)
 		case 2:
 			json.Unmarshal(data, &filter)
 		case 3:
-			json.Unmarshal(data, &link)
+			json.Unmarshal(data, &changes)
 		}
 	}
 }
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {
-	goals := read(access.Source)
+	goals := read(jira.Source)
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)
@@ -60,7 +60,7 @@ func engine(i int, updates []string) {
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-e", "curl", "-H", "Authorization: Basic "+access.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", access.Cloud+"issue")
+			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
@@ -71,7 +71,7 @@ func engine(i int, updates []string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", access.Cloud+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+access.Token, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
 	json.Unmarshal(result, &sre)
 }
 
@@ -84,12 +84,12 @@ func switchboard() {
 	case "bcgov-plugin":
 		premium(label)
 	case "freemius":
-		substitution(link.Changelogs[9].Spotlight, filter.OPH2+"v"+version+filter.ESP)
+		substitution(changes.Spotlight, filter.OPH2+"v"+version+filter.ESP)
 	case "wpengine":
-		substitution(link.Changelogs[9].WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
+		substitution(changes.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", temp[0])
 	default:
-		substitution(link.Changelogs[9].WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
+		substitution(changes.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", temp[0])
 	}
 }
@@ -99,20 +99,20 @@ func premium(label string) {
 	v := bytes.ReplaceAll([]byte(version), []byte(versions[0][0]), []byte(versions[0][1]))
 	switch label {
 	case "events-calendar-pro":
-		substitution(link.Changelogs[9].Calendar+string(v)+"/", "/"+version+filter.Event)
+		substitution(changes.Calendar+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "event-tickets-plus":
-		substitution(link.Changelogs[9].Tickets+string(v)+"/", "/"+version+filter.Event)
+		substitution(changes.Tickets+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "events-virtual":
-		substitution(link.Changelogs[9].Virtual+string(v)+"/", "/"+version+filter.Event)
+		substitution(changes.Virtual+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "gravityforms":
-		substitution(link.Changelogs[9].Gravity, filter.OPH3+version+filter.End)
+		substitution(changes.Gravity, filter.OPH3+version+filter.End)
 	case "polylang-pro":
-		substitution(link.Changelogs[9].Poly, filter.OPH4+version+filter.End)
+		substitution(changes.Poly, filter.OPH4+version+filter.End)
 	case "wp-all-export-pro":
-		substitution(link.Changelogs[9].WPExport, "/"+version+filter.CLH4)
+		substitution(changes.WPExport, "/"+version+filter.CLH4)
 		content = execute("-c", "sed", "${/h3./d;}", temp[0])
 	}
 }
