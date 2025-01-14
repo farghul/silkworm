@@ -81,7 +81,7 @@ func switchboard() {
 		repo = "freemius"
 	}
 	switch repo {
-	case "bcgov-plugin":
+	case "premium-plugin":
 		premium(label)
 	case "freemius":
 		substitution(changes.Spotlight, filter.OPH2+"v"+version+filter.ESP)
