@@ -16,9 +16,9 @@ func serialize() {
 		case 0:
 			json.Unmarshal(data, &changes)
 		case 1:
-			json.Unmarshal(data, &jira)
-		case 2:
 			json.Unmarshal(data, &filter)
+		case 2:
+			json.Unmarshal(data, &jira)
 		case 3:
 			json.Unmarshal(data, &post)
 		}
