@@ -1,10 +1,12 @@
 {
   "fields": {
     "assignee": {
-      "accountId": "Account ID of user assigned to ticket"
+      "self": "Assignees API identity url",
+      "accountId": "Assignees Account ID",
+      "emailAddress": "Assignees email address"
     },
     "issuetype": {
-      "self": "IssueType identity url",
+      "self": "IssueType API identity url",
       "id": "IssueType ID",
       "name": "IssueType name"
     },
@@ -18,7 +20,7 @@
       "emailAddress": "Reporters email address"
     },
     "project": {
-      "self": "Project identity url",
+      "self": "Project API identity url",
       "id": "Project ID",
       "key": "Project short name",
       "name": "Project long name",
@@ -27,7 +29,7 @@
     "description": "A longer and more detailed explanation of the purpose and goals of the ticket.",
     "summary": "Short, descriptive title for the new ticket.",
     "priority": {
-      "self": "Priority identity url",
+      "self": "Priority API identity url",
       "name": "Priority name",
       "id": "Priority ID"
     }
