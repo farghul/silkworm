@@ -65,7 +65,6 @@ func engine(i int, updates []string) {
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
 			journal("Jira ticket " + sre.Issues[0].Key + " created.")
-			alert("Jira ticket " + sre.Issues[0].Key + " created.")
 		}
 	}
 }
