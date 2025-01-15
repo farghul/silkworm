@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -27,7 +28,7 @@ func serialize() {
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {
-	goals := read(jira.Source)
+	goals := read(location + "updates/updates.txt")
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)
@@ -63,8 +64,9 @@ func engine(i int, updates []string) {
 			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
-			apiget(firstsplit[1])
+			// apiget(firstsplit[1])
 			journal("Jira ticket " + sre.Issues[0].Key + " created.")
+			fmt.Println("Jira ticket " + sre.Issues[0].Key + " created.")
 		}
 	}
 }

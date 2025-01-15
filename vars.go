@@ -20,6 +20,16 @@ type Changelogs struct {
 	WPExport  string `json:"wpexport"`
 }
 
+// Desso builds the result of the API search
+type Desso struct {
+	Issues []struct {
+		Key    string `json:"key"`
+		Fields struct {
+			Summary string `json:"summary"`
+		} `json:"fields"`
+	} `json:"issues"`
+}
+
 // Filters builds the parameters for sed to execute on the scrapped.txt file
 type Filters struct {
 	OPH2  string `json:"oph2"`
@@ -31,16 +41,6 @@ type Filters struct {
 	End   string `json:"end"`
 	ESP   string `json:"esp"`
 	Event string `json:"event"`
-}
-
-// Desso builds the result of the API search
-type Desso struct {
-	Issues []struct {
-		Key    string `json:"key"`
-		Fields struct {
-			Summary string `json:"summary"`
-		} `json:"fields"`
-	} `json:"issues"`
 }
 
 // Posts builds the ticket information to send to Jira
@@ -83,7 +83,7 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
-	assets   string = "/data/scripts/automation/programs/"
+	location string = "/data/scripts/automation/programs/"
 )
 
 var (
@@ -97,8 +97,8 @@ var (
 	jira      Atlassian
 	changes   Changelogs
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{assets + "temp/grep.txt", assets + "temp/scrape.txt"}
-	jsons     = []string{assets + "jsons/changelogs.json", assets + "jsons/filters.json", assets + "jsons/jira.json", assets + "jsons/new.json"}
+	temp      = []string{location + "temp/grep.txt", location + "temp/scrape.txt"}
+	jsons     = []string{location + "jsons/changelogs.json", location + "jsons/filters.json", location + "jsons/jira.json", location + "jsons/new.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
