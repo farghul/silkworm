@@ -27,7 +27,7 @@ func serialize() {
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {
-	goals := read(location + "updates/updates.txt")
+	goals := read(assets + "updates/updates.txt")
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)

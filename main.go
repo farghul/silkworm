@@ -10,7 +10,7 @@ func main() {
 	case "-v", "--version":
 		build()
 	case "--zero":
-		clearout(location + "temp/")
+		clearout(assets + "temp/")
 		serialize()
 		sifter()
 	default:

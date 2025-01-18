@@ -93,7 +93,7 @@ func sweep(cut ...string) {
 
 // Record a message to the log file and duplicate the output to console
 func journal(message string) {
-	file, err := os.OpenFile(location+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile(assets+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	inspect(err)
 	log.SetOutput(file)
 	log.Println(message)

@@ -83,7 +83,7 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
-	location string = "/data/scripts/automation/programs/"
+	assets   string = "/data/scripts/automation/assets/"
 )
 
 var (
@@ -97,8 +97,8 @@ var (
 	jira      Atlassian
 	changes   Changelogs
 	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{location + "temp/grep.txt", location + "temp/scrape.txt"}
-	jsons     = []string{location + "jsons/changelogs.json", location + "jsons/filters.json", location + "jsons/jira.json", location + "jsons/new.json"}
+	temp      = []string{assets + "temp/grep.txt", assets + "temp/scrape.txt"}
+	jsons     = []string{assets + "jsons/changelogs.json", assets + "jsons/filters.json", assets + "jsons/jira.json", assets + "jsons/new.json"}
 	deletions = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
