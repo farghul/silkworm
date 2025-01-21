@@ -8,9 +8,6 @@ pipeline {
             numToKeepStr: "10"
         )
     }
-    triggers {
-        cron "15 8 * * 2"
-    }
     stages {
         stage('Sync') {
             steps {
@@ -40,6 +37,11 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        success {
+            build job: '3DS - Push Updates to Test'
         }
     }
 }
