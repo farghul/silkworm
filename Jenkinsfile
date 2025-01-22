@@ -41,7 +41,7 @@ pipeline {
     }
     post {
         success {
-            build job: '3DS - Push Updates to Test'
+            build job: '3DS - WPackagist Updates (development)'
         }
     }
 }
