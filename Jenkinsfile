@@ -39,9 +39,4 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            build job: '3DS - WPackagist Updates (development)'
-        }
-    }
 }
