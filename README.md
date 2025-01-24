@@ -12,7 +12,12 @@ A variety of json files to enable ticket creation, authorized querying, and chan
 
 ## Build
 
-From the root folder containing `main.go`, use the command that matches your environment:
+Before building the application, change the value of the `assets` constant to reflect your environment:
+
+``` go
+assets string = "/data/scripts/automation/assets/"
+```
+Then, from the root folder containing `main.go`, use the command that matches your environment:
 
 ### Windows & Mac
 

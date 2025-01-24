@@ -14,13 +14,17 @@ func serialize() {
 		inspect(err)
 		switch index {
 		case 0:
-			json.Unmarshal(data, &changes)
+			err := json.Unmarshal(data, &changes)
+			inspect(err)
 		case 1:
-			json.Unmarshal(data, &filter)
+			err := json.Unmarshal(data, &filter)
+			inspect(err)
 		case 2:
-			json.Unmarshal(data, &jira)
+			err := json.Unmarshal(data, &jira)
+			inspect(err)
 		case 3:
-			json.Unmarshal(data, &post)
+			err := json.Unmarshal(data, &post)
+			inspect(err)
 		}
 	}
 }
@@ -60,7 +64,7 @@ func engine(i int, updates []string) {
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-e", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
+			execute("-v", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
@@ -72,7 +76,8 @@ func engine(i int, updates []string) {
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
 	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
-	json.Unmarshal(result, &sre)
+	err := json.Unmarshal(result, &sre)
+	inspect(err)
 }
 
 // Sort the query based on repository name
@@ -119,7 +124,7 @@ func premium(label string) {
 
 // Find and replace/delete html tags
 func substitution(link, filter string) {
-	execute("-e", "curl", "-s", link, "-o", temp[1])
+	execute("-v", "curl", "-s", link, "-o", temp[1])
 	grep := execute("-c", "sed", "-n", filter, temp[1])
 	for _, v := range deletions {
 		replace := bytes.ReplaceAll(grep, []byte(v), []byte(""))

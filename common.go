@@ -28,8 +28,6 @@ func document(name string, d []byte) {
 func execute(variation, task string, args ...string) []byte {
 	osCmd := exec.Command(task, args...)
 	switch variation {
-	case "-e":
-		exec.Command(task, args...).CombinedOutput()
 	case "-c":
 		result, err := osCmd.Output()
 		inspect(err)
