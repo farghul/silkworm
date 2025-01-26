@@ -17,6 +17,7 @@ Before building the application, change the value of the `assets` constant to re
 ``` go
 assets string = "/data/scripts/automation/assets/"
 ```
+
 Then, from the root folder containing `main.go`, use the command that matches your environment:
 
 ### Windows & Mac
