@@ -3,31 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"os"
 	"strings"
 )
-
-// Read the JSON files and Unmarshal the data into the appropriate Go structure
-func serialize() {
-	for index, element := range jsons {
-		data, err := os.ReadFile(element)
-		inspect(err)
-		switch index {
-		case 0:
-			err := json.Unmarshal(data, &changes)
-			inspect(err)
-		case 1:
-			err := json.Unmarshal(data, &filter)
-			inspect(err)
-		case 2:
-			err := json.Unmarshal(data, &jira)
-			inspect(err)
-		case 3:
-			err := json.Unmarshal(data, &post)
-			inspect(err)
-		}
-	}
-}
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {

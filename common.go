@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"encoding/json"
 	"os"
 	"os/exec"
 )
@@ -17,6 +16,28 @@ func flags() string {
 		flag = os.Args[1]
 	}
 	return flag
+}
+
+// Read the JSON files and Unmarshal the data into the appropriate Go structure
+func serialize() {
+	for index, element := range jsons {
+		data, err := os.ReadFile(element)
+		inspect(err)
+		switch index {
+		case 0:
+			err := json.Unmarshal(data, &changes)
+			inspect(err)
+		case 1:
+			err := json.Unmarshal(data, &filter)
+			inspect(err)
+		case 2:
+			err := json.Unmarshal(data, &jira)
+			inspect(err)
+		case 3:
+			err := json.Unmarshal(data, &post)
+			inspect(err)
+		}
+	}
 }
 
 // Write a passed variable to a named file
@@ -48,6 +69,13 @@ func inspect(err error) {
 	}
 }
 
+// Open a file for reading and return an os.File variable
+func expose(file string) *os.File {
+	outcome, err := os.Open(file)
+	inspect(err)
+	return outcome
+}
+
 // Read any file and return the contents as a byte variable
 func read(file string) []byte {
 	outcome, problem := os.ReadFile(file)
@@ -69,13 +97,6 @@ func ls(folder string) []string {
 	return content
 }
 
-// Open a file for reading and return an os.File variable
-func expose(file string) *os.File {
-	outcome, err := os.Open(file)
-	inspect(err)
-	return outcome
-}
-
 // Empty the contents a folder
 func clearout(path string) {
 	list := ls(path)
@@ -87,42 +108,4 @@ func clearout(path string) {
 // Remove files or directories
 func sweep(cut ...string) {
 	inspect(os.Remove(cut[0.]))
-}
-
-// Record a message to the log file and duplicate the output to console
-func journal(message string) {
-	file, err := os.OpenFile(assets+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	inspect(err)
-	log.SetOutput(file)
-	log.Println(message)
-	fmt.Println(message)
-}
-
-// Print a colourized error message
-func alert(message string) {
-	fmt.Println("\n", bgred, message, halt, reset)
-	fmt.Println("\n", bgyellow, "Use -h for more detailed help information ")
-	fmt.Println(reset)
-	os.Exit(0)
-}
-
-// Display the build version of the program
-func build() {
-	fmt.Println("\n", yellow+"Silkworm", green+bv, reset)
-}
-
-// Print help information for using the program
-func help() {
-	fmt.Println(yellow, "\nUsage:", reset)
-	fmt.Println("  [program] [flag]")
-	fmt.Println(yellow, "\nOptions:")
-	fmt.Println(green, " -h, --help", reset, "		Help Information")
-	fmt.Println(green, " -v, --version", reset, "	Display Program Version")
-	fmt.Println(yellow, "\nExample:", reset)
-	fmt.Println("  Adding your path to file if necessary, run:")
-	fmt.Println(green, "    silkworm")
-	fmt.Println(yellow, "\nHelp:", reset)
-	fmt.Println("  For more information go to:")
-	fmt.Println(green, "   https://github.com/farghul/silkworm.git")
-	fmt.Println(reset)
 }
