@@ -12,10 +12,12 @@ func sifter() {
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)
-	} else {
+	} else if len(updates) > 1 {
 		for i := 0; i < len(updates); i++ {
 			engine(i, updates)
 		}
+	} else {
+		journal("No new tickets to create")
 	}
 }
 
