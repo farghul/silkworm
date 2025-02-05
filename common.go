@@ -107,5 +107,5 @@ func clearout(path string) {
 
 // Remove files or directories
 func sweep(cut ...string) {
-	inspect(os.Remove(cut[0.]))
+	inspect(os.RemoveAll(cut[0.]))
 }
