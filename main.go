@@ -54,7 +54,7 @@ func help() {
 	fmt.Println("  [program] [flag]")
 	fmt.Println(yellow, "\nOperational Flags:")
 	fmt.Println(green, " -h, --help", reset, "		Help Information")
-	fmt.Println(green, " -r, --run", reset, "       Run Program")
+	fmt.Println(green, " -r, --run", reset, "           Run Program")
 	fmt.Println(green, " -v, --version", reset, "	Display Program Version")
 	fmt.Println(yellow, "\nExample:", reset)
 	fmt.Println("  Adding your path to file if necessary, run:")
