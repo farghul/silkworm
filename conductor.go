@@ -12,12 +12,10 @@ func sifter() {
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)
-	} else if len(updates) > 1 {
+	} else {
 		for i := 0; i < len(updates); i++ {
 			engine(i, updates)
 		}
-	} else {
-		journal("No new tickets to create")
 	}
 }
 
@@ -47,7 +45,9 @@ func engine(i int, updates []string) {
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
-			journal("Jira ticket " + sre.Issues[0].Key + " created.")
+			inform("Jira ticket " + sre.Issues[0].Key + " created.")
+		} else {
+			inform("Jira ticket " + sre.Issues[0].Key + " already exists.")
 		}
 	}
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -26,13 +25,10 @@ func main() {
 	}
 }
 
-// Record a message to the log file and duplicate the output to console
-func journal(message string) {
-	file, err := os.OpenFile(assets+"logs/silkworm.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	inspect(err)
-	log.SetOutput(file)
-	log.Println(message)
-	fmt.Println(message)
+// Provide and highlight an informational message
+func inform(message string) {
+	fmt.Println(yellow)
+	fmt.Println("**", reset, message, yellow, "**", reset)
 }
 
 // Print a colourized error message
