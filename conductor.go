@@ -61,9 +61,6 @@ func apiget(ticket string) {
 
 // Sort the query based on repository name
 func switchboard() {
-	if label == "spotlight-social-photo-feeds" {
-		repo = "freemius"
-	}
 	switch repo {
 	case "premium-plugin":
 		premium(label)
