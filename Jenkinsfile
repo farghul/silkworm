@@ -12,7 +12,7 @@ pipeline {
         cron "H 9 * * 3"
     }
     stages {
-        stage("Git Pull") {
+        stage("Pull Changes") {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/silkworm") {
@@ -29,20 +29,17 @@ pipeline {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/silkworm") {
-                        sh '''#!/bin/bash
-                        source ~/.bashrc
-                        go build -o /data/automation/bin/silkworm .
-                        '''
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm ."
                     }
                 }
             }
         }
-        stage("Run") {
+        stage("Run Silkworm") {
             steps {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            sh "/data/automation/scripts/run_silkworm.sh"
+                            sh "/data/automation/scripts/silkworm.sh"
                         }
                     }
                 }
