@@ -13,7 +13,7 @@ func main() {
 	case "-h", "--help":
 		help()
 	case "-r", "--run":
-		clearout(assets + "temp/")
+		clearout(temp)
 		serialize()
 		sifter()
 	case "-v", "--version":

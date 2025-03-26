@@ -20,7 +20,7 @@ func flags() string {
 
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
-	for index, element := range jsons {
+	for index, element := range persistent {
 		data, err := os.ReadFile(element)
 		inspect(err)
 		switch index {

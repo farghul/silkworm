@@ -83,23 +83,24 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
+	temp     string = "/data/automation/temp/"
 	assets   string = "/data/automation/assets/"
 )
 
 var (
-	sre       Desso
-	post      Posts
-	label     string
-	repo      string
-	version   string
-	content   []byte
-	filter    Filters
-	jira      Atlassian
-	changes   Changelogs
-	versions  = [1][2]string{{".", "-"}}
-	temp      = []string{"/data/automation/temp/grep.txt", "/data/automation/temp/scrape.txt"}
-	jsons     = []string{assets + "changelogs.json", assets + "filters.json", assets + "jira.json", assets + "new.json"}
-	deletions = []string{
+	sre        Desso
+	post       Posts
+	label      string
+	repo       string
+	version    string
+	content    []byte
+	filter     Filters
+	jira       Atlassian
+	changes    Changelogs
+	versions   = [1][2]string{{".", "-"}}
+	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
+	persistent = []string{assets + "changelogs.json", assets + "filters.json", assets + "jira.json", assets + "new.json"}
+	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
 		"</h3>", "</h4>", "</li>",

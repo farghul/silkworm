@@ -68,10 +68,10 @@ func switchboard() {
 		substitution(changes.Spotlight, filter.OPH2+"v"+version+filter.ESP)
 	case "wpengine":
 		substitution(changes.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
-		content = execute("-c", "sed", "1d", temp[0])
+		content = execute("-c", "sed", "1d", ephemeral[0])
 	default:
 		substitution(changes.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
-		content = execute("-c", "sed", "1d", temp[0])
+		content = execute("-c", "sed", "1d", ephemeral[0])
 	}
 }
 
@@ -94,14 +94,14 @@ func premium(label string) {
 		substitution(changes.Poly, filter.OPH4+version+filter.End)
 	case "wp-all-export-pro":
 		substitution(changes.WPExport, "/"+version+filter.CLH4)
-		content = execute("-c", "sed", "${/h3./d;}", temp[0])
+		content = execute("-c", "sed", "${/h3./d;}", ephemeral[0])
 	}
 }
 
 // Find and replace/delete html tags
 func substitution(link, filter string) {
-	execute("-v", "curl", "-s", link, "-o", temp[1])
-	grep := execute("-c", "sed", "-n", filter, temp[1])
+	execute("-v", "curl", "-s", link, "-o", ephemeral[1])
+	grep := execute("-c", "sed", "-n", filter, ephemeral[1])
 	for _, v := range deletions {
 		replace := bytes.ReplaceAll(grep, []byte(v), []byte(""))
 		grep = replace
@@ -110,15 +110,15 @@ func substitution(link, filter string) {
 		replace := bytes.ReplaceAll(grep, []byte(replacements[i][0]), []byte(replacements[i][1]))
 		grep = replace
 	}
-	document(temp[0], grep)
-	content = execute("-c", "sed", "/^$/d ; s/	//g", temp[0])
-	document(temp[0], content)
+	document(ephemeral[0], grep)
+	content = execute("-c", "sed", "/^$/d ; s/	//g", ephemeral[0])
+	document(ephemeral[0], content)
 }
 
 // Special filter to handle the Events Calendar suite of updates
 func eventfilter() {
-	content = execute("-c", "grep", "-v", "<", temp[0])
-	document(temp[0], content)
-	content = execute("-c", "sed", "1,3d", temp[0])
+	content = execute("-c", "grep", "-v", "<", ephemeral[0])
+	document(ephemeral[0], content)
+	content = execute("-c", "sed", "1,3d", ephemeral[0])
 	content = append([]byte("h3. "+version+"\n"), content...)
 }
