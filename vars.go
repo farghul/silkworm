@@ -75,16 +75,16 @@ type Posts struct {
 }
 
 const (
-	bv       string = "1.0.0"
-	reset    string = "\033[0m"
-	bgred    string = "\033[41m"
-	green    string = "\033[32m"
-	yellow   string = "\033[33m"
-	bgyellow string = "\033[43m"
-	halt     string = "program halted"
-	header   string = "\nh2. Changelog\n"
-	temp     string = "/data/automation/temp/"
-	assets   string = "/data/automation/assets/"
+	bv        string = "1.0.0"
+	reset     string = "\033[0m"
+	bgred     string = "\033[41m"
+	green     string = "\033[32m"
+	yellow    string = "\033[33m"
+	bgyellow  string = "\033[43m"
+	halt      string = "program halted"
+	header    string = "\nh2. Changelog\n"
+	temp      string = "/data/automation/temp/"
+	resources string = "/data/automation/resources/"
 )
 
 var (
@@ -99,7 +99,7 @@ var (
 	changes    Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
-	persistent = []string{assets + "changelogs.json", assets + "filters.json", assets + "jira.json", assets + "new.json"}
+	persistent = []string{resources + "changelogs.json", resources + "filters.json", resources + "jira.json", resources + "new.json"}
 	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
