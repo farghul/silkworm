@@ -6,16 +6,18 @@ Silkworm is a WordPress plugin update ticket creation tool. It's meant to bridge
 
 ## Prerequisite
 
-Googles' [Go language](https://go.dev) installed to enable building executables from source code.
+The [Go Programming Language](https://go.dev "Build simple, secure, scalable systems with Go") installed to enable building executables from source code.
 
 A variety of json files to enable ticket creation, authorized querying, and changelog gathering (see `jsons` folder for reference).
 
 ## Build
 
-Before building the application, change the value of the `resources` constant to reflect your environment:
+Before building the application, change the values of the `temp`, `repos`, and `config` constants to reflect your environment:
 
 ``` go
-resources string = "/data/automation/resources/"
+temp     string = "/data/automation/temp/"
+repos    string = "/data/automation/bitbucket/"
+config   string = "desso-automation-config/atlassian/"
 ```
 
 Then, from the root folder containing `main.go`, use the command that matches your environment:
@@ -54,4 +56,4 @@ silkworm -r
 
 ## License
 
-Code is distributed under [The Unlicense](https://github.com/farghul/silkworm/blob/main/LICENSE.md) and is part of the Public Domain.
+Code is distributed under [The Unlicense](https://github.com/farghul/silkworm/blob/main/LICENSE.md "Unlicense Yourself, Set Your Code Free") and is part of the Public Domain.

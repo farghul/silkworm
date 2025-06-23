@@ -8,7 +8,7 @@ import (
 
 // Read updates.txt and take action based on the length of the produced array
 func sifter() {
-	goals := read(resources + "updates.txt")
+	goals := read(jira.Source)
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) == 1 {
 		engine(0, updates)

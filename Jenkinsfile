@@ -29,7 +29,7 @@ pipeline {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/silkworm") {
-                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm ."
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
                     }
                 }
             }
@@ -39,7 +39,9 @@ pipeline {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            sh "/data/automation/scripts/silkworm.sh"
+                            dir("/data/automation/bitbucket/desso-automation-conf/scripts") {
+                                sh "silkworm.sh"
+                            }
                         }
                     }
                 }

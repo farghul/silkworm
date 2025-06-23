@@ -1,4 +1,5 @@
 {
+  "source": "Location of the updates.txt file",
   "token": "Email:Jira API Token combination with Base 64 Encoding",
   "url": "Jira Issue API base URL, ex. https://jira.com/rest/api/latest/"
 }
