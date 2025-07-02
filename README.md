@@ -17,7 +17,7 @@ Before building the application, change the values of the `temp`, `repos`, and `
 ``` go
 temp     string = "/data/automation/temp/"
 repos    string = "/data/automation/bitbucket/"
-config   string = "desso-automation-config/atlassian/"
+config   string = "desso-automation-conf/atlassian/"
 ```
 
 Then, from the root folder containing `main.go`, use the command that matches your environment:

@@ -85,7 +85,7 @@ const (
 	header   string = "\nh2. Changelog\n"
 	temp     string = "/data/automation/temp/"
 	repos    string = "/data/automation/bitbucket/"
-	config   string = "desso-automation-config/atlassian/"
+	config   string = "desso-automation-conf/atlassian/"
 )
 
 var (
