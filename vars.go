@@ -2,7 +2,7 @@ package main
 
 // Access builds the jira token for API access
 type Access struct {
-	Token string `json:"token"`
+	Token string `json:"jira"`
 }
 
 // Atlassian builds the jira api address and update source
