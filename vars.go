@@ -1,7 +1,7 @@
 package main
 
-// Access builds the jira token for API access
-type Access struct {
+// Authorization builds the jira token for API access
+type Authorization struct {
 	Token string `json:"jira"`
 }
 
@@ -101,7 +101,7 @@ var (
 	version    string
 	content    []byte
 	filter     Filters
-	key        Access
+	access     Authorization
 	jira       Atlassian
 	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}

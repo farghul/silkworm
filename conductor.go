@@ -41,7 +41,7 @@ func engine(i int, updates []string) {
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-v", "curl", "-H", "Authorization: Basic "+key.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
+			execute("-v", "curl", "-H", "Authorization: Basic "+access.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
@@ -54,7 +54,7 @@ func engine(i int, updates []string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+key.Token, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+access.Token, "--header", "Accept: application/json")
 	err := json.Unmarshal(result, &sre)
 	inspect(err)
 }
