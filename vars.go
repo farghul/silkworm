@@ -1,9 +1,13 @@
 package main
 
-// Atlassian builds a list of jira tokens and api addresses
+// Access builds the jira token for API access
+type Access struct {
+	Token string `json:"token"`
+}
+
+// Atlassian builds the jira api address and update source
 type Atlassian struct {
 	URL    string `json:"url"`
-	Token  string `json:"token"`
 	Source string `json:"source"`
 }
 
@@ -84,6 +88,7 @@ const (
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
 	temp     string = "/data/automation/temp/"
+	tokens   string = "/data/automation/tokens/"
 	repos    string = "/data/automation/bitbucket/"
 	config   string = "desso-automation-conf/jsons/"
 )
@@ -96,11 +101,12 @@ var (
 	version    string
 	content    []byte
 	filter     Filters
+	key        Access
 	jira       Atlassian
-	changes    Changelogs
+	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
-	persistent = []string{repos + config + "changelogs.json", repos + config + "filters.json", repos + config + "jira.json", repos + config + "template.json"}
+	persistent = []string{repos + config + "changelogs.json", repos + config + "filters.json", repos + config + "jira.json", repos + config + "template.json", repos + tokens + "tokens.json"}
 	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",

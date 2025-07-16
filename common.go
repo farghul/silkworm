@@ -25,7 +25,7 @@ func serialize() {
 		inspect(err)
 		switch index {
 		case 0:
-			err := json.Unmarshal(data, &changes)
+			err := json.Unmarshal(data, &changelog)
 			inspect(err)
 		case 1:
 			err := json.Unmarshal(data, &filter)
@@ -35,6 +35,9 @@ func serialize() {
 			inspect(err)
 		case 3:
 			err := json.Unmarshal(data, &post)
+			inspect(err)
+		case 4:
+			err := json.Unmarshal(data, &key)
 			inspect(err)
 		}
 	}

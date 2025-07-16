@@ -41,7 +41,7 @@ func engine(i int, updates []string) {
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = updates[i]
 			body, _ := json.Marshal(post)
-			execute("-v", "curl", "-H", "Authorization: Basic "+jira.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
+			execute("-v", "curl", "-H", "Authorization: Basic "+key.Token, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
@@ -54,7 +54,7 @@ func engine(i int, updates []string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+key.Token, "--header", "Accept: application/json")
 	err := json.Unmarshal(result, &sre)
 	inspect(err)
 }
@@ -65,12 +65,12 @@ func switchboard() {
 	case "premium-plugin":
 		premium(label)
 	case "freemius":
-		substitution(changes.Spotlight, filter.OPH2+"v"+version+filter.ESP)
+		substitution(changelog.Spotlight, filter.OPH2+"v"+version+filter.ESP)
 	case "wpengine":
-		substitution(changes.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
+		substitution(changelog.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", ephemeral[0])
 	default:
-		substitution(changes.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
+		substitution(changelog.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", ephemeral[0])
 	}
 }
@@ -80,20 +80,20 @@ func premium(label string) {
 	v := bytes.ReplaceAll([]byte(version), []byte(versions[0][0]), []byte(versions[0][1]))
 	switch label {
 	case "events-calendar-pro":
-		substitution(changes.Calendar+string(v)+"/", "/"+version+filter.Event)
+		substitution(changelog.Calendar+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "event-tickets-plus":
-		substitution(changes.Tickets+string(v)+"/", "/"+version+filter.Event)
+		substitution(changelog.Tickets+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "events-virtual":
-		substitution(changes.Virtual+string(v)+"/", "/"+version+filter.Event)
+		substitution(changelog.Virtual+string(v)+"/", "/"+version+filter.Event)
 		eventfilter()
 	case "gravityforms":
-		substitution(changes.Gravity, filter.OPH3+version+filter.End)
+		substitution(changelog.Gravity, filter.OPH3+version+filter.End)
 	case "polylang-pro":
-		substitution(changes.Poly, filter.OPH4+version+filter.End)
+		substitution(changelog.Poly, filter.OPH4+version+filter.End)
 	case "wp-all-export-pro":
-		substitution(changes.WPExport, "/"+version+filter.CLH4)
+		substitution(changelog.WPExport, "/"+version+filter.CLH4)
 		content = execute("-c", "sed", "${/h3./d;}", ephemeral[0])
 	}
 }
