@@ -12,10 +12,11 @@ A variety of json files to enable ticket creation, authorized querying, and chan
 
 ## Build
 
-Before building the application, change the values of the `temp`, `repos`, and `config` constants to reflect your environment:
+Before building the application, change the values of the `temp`, `tokens`, `repos`, and `config` constants to reflect your environment:
 
 ``` go
 temp     string = "/data/automation/temp/"
+tokens   string = "/data/automation/tokens/"
 repos    string = "/data/automation/bitbucket/"
 config   string = "desso-automation-conf/atlassian/"
 ```

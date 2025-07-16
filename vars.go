@@ -1,17 +1,17 @@
 package main
 
-// Authorization builds the jira token for API access
-type Authorization struct {
-	Token string `json:"jira"`
+// Tokens holds the jira API token used
+type Tokens struct {
+	Jira string `json:"jira"`
 }
 
-// Atlassian builds the jira api address and update source
-type Atlassian struct {
+// Jira builds the Jira API address and update source
+type Jira struct {
 	URL    string `json:"url"`
 	Source string `json:"source"`
 }
 
-// Changelogs builds a collection of urls to target changlogs
+// Changelogs builds a collection of urls to target changelogs
 type Changelogs struct {
 	ACF       string `json:"acf"`
 	Calendar  string `json:"calendar"`
@@ -100,9 +100,9 @@ var (
 	repo       string
 	version    string
 	content    []byte
+	jira       Jira
+	token      Tokens
 	filter     Filters
-	access     Authorization
-	jira       Atlassian
 	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}

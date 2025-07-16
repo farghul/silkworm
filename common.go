@@ -37,7 +37,7 @@ func serialize() {
 			err := json.Unmarshal(data, &post)
 			inspect(err)
 		case 4:
-			err := json.Unmarshal(data, &access)
+			err := json.Unmarshal(data, &token)
 			inspect(err)
 		}
 	}
