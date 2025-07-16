@@ -1,10 +1,5 @@
 {
   "fields": {
-    "assignee": {
-      "self": "Assignees API identity url",
-      "accountId": "Assignees Account ID",
-      "emailAddress": "Assignees email address"
-    },
     "issuetype": {
       "self": "IssueType API identity url",
       "id": "IssueType ID",
