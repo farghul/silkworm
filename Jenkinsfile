@@ -19,7 +19,7 @@ pipeline {
                         sh '''#!/bin/bash
                         source ~/.bashrc
                         git fetch --all
-                        git switch main
+                        git checkout main
                         git pull
                         '''
                     }

@@ -12,7 +12,7 @@ func sifter() {
 	updates := strings.Split(string(goals), "\n")
 	if len(updates) > 1 {
 		for _, s := range updates {
-			engine(s)
+			engine(strings.TrimSpace(s))
 		}
 	}
 }
@@ -104,7 +104,7 @@ func substitution(link, filter string) {
 		replace := bytes.ReplaceAll(grep, []byte(v), []byte(""))
 		grep = replace
 	}
-	for i := 0; i < len(replacements); i++ {
+	for i := range len(replacements) {
 		replace := bytes.ReplaceAll(grep, []byte(replacements[i][0]), []byte(replacements[i][1]))
 		grep = replace
 	}
