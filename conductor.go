@@ -13,7 +13,7 @@ func sifter() {
 	if len(updates) == 1 {
 		engine(0, updates)
 	} else {
-		for i := 0; i < len(updates); i++ {
+		for i := range updates {
 			engine(i, updates)
 		}
 	}
