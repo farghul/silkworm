@@ -1,4 +1,5 @@
 {
   "source": "Location of the updates.txt file",
-  "url": "Jira Issue API base URL, ex. https://jira.com/rest/api/latest/"
+  "url": "Jira Issue API base URL, ex. https://jira.com/rest/api/latest/",
+  "criteria": "Search criteria to find existing tickets"
 }

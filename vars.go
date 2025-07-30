@@ -7,8 +7,9 @@ type Tokens struct {
 
 // Jira builds the Jira API address and update source
 type Jira struct {
-	URL    string `json:"url"`
-	Source string `json:"source"`
+	URL      string `json:"url"`
+	Source   string `json:"source"`
+	Criteria string `json:"criteria"`
 }
 
 // Changelogs builds a collection of urls to target changelogs

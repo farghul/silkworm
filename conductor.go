@@ -10,21 +10,19 @@ import (
 func sifter() {
 	goals := read(jira.Source)
 	updates := strings.Split(string(goals), "\n")
-	if len(updates) == 1 {
-		engine(0, updates)
-	} else {
-		for i := range updates {
-			engine(i, updates)
+	if len(updates) > 1 {
+		for _, s := range updates {
+			engine(s)
 		}
 	}
 }
 
 // Iterate through the updates array and assign plugin and ticket values
-func engine(i int, updates []string) {
-	if len(updates[i]) > 25 {
+func engine(entry string) {
+	if len(entry) > 25 {
 
 		/* See if the ticket already exists */
-		firstsplit := strings.Split(updates[i], "/")
+		firstsplit := strings.Split(entry, "/")
 		apiget(firstsplit[1])
 
 		/* If not, create it */
@@ -39,7 +37,7 @@ func engine(i int, updates []string) {
 
 			/* Create Jira ticket using Description & Summary */
 			post.Fields.Description = string(changelog)
-			post.Fields.Summary = updates[i]
+			post.Fields.Summary = entry
 			body, _ := json.Marshal(post)
 			execute("-v", "curl", "-H", "Authorization: Basic "+token.Jira, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
@@ -54,7 +52,7 @@ func engine(i int, updates []string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql=summary%20~%20"+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql="+jira.Criteria+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
 	err := json.Unmarshal(result, &sre)
 	inspect(err)
 }
