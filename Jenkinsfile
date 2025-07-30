@@ -12,7 +12,21 @@ pipeline {
         cron "H 9 * * 3"
     }
     stages {
-        stage("Pull Changes") {
+        stage("Pull Config Changes") {
+            steps {
+                lock("satis-rebuild-resource") {
+                    dir("/data/automation/bitbucket/desso-automation-conf") {
+                        sh '''#!/bin/bash
+                        source ~/.bashrc
+                        git fetch --all
+                        git switch main
+                        git pull
+                        '''
+                    }
+                }
+            }
+        }
+        stage("Pull Program Changes") {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/silkworm") {
