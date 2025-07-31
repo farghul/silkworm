@@ -38,8 +38,8 @@ func engine(entry string) {
 			/* Create Jira ticket using Description & Summary */
 			post.Fields.Description = string(changelog)
 			post.Fields.Summary = entry
-			// body, _ := json.Marshal(post)
-			// execute("-v", "curl", "-H", "Authorization: Basic "+token.Jira, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
+			body, _ := json.Marshal(post)
+			execute("-v", "curl", "-H", "Authorization: Basic "+token.Jira, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
 
 			/* Get the new DESSO key and log the ticket creation */
 			apiget(firstsplit[1])
@@ -52,7 +52,7 @@ func engine(entry string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql="+jira.Criteria+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql="+jira.Summary+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
 	err := json.Unmarshal(result, &sre)
 	inspect(err)
 }
