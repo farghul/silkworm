@@ -8,57 +8,39 @@ pipeline {
             numToKeepStr: "10"
         )
     }
-    triggers {
-        cron "H 9 * * 3"
-    }
     stages {
-        stage("Pull Config Changes") {
+        stage('Clean WS') {
             steps {
-                lock("satis-rebuild-resource") {
-                    dir("/data/automation/bitbucket/desso-automation-conf") {
-                        sh '''#!/bin/bash
-                        source ~/.bashrc
-                        git fetch --all
-                        git switch main
-                        git pull
-                        '''
-                    }
-                }
+                cleanWs()
             }
         }
-        stage("Pull Program Changes") {
+        stage("Checkout Silkworm") {
             steps {
-                lock("satis-rebuild-resource") {
-                    dir("/data/automation/github/silkworm") {
-                        sh '''#!/bin/bash
-                        source ~/.bashrc
-                        git fetch --all
-                        git checkout main
-                        git pull
-                        '''
-                    }
-                }
+                checkout scmGit(
+                    branches: [[name: 'main']],
+                    userRemoteConfigs: [[url: 'https://github.com/farghul/silkworm.git']]
+                )
             }
         }
         stage("Build Silkworm") {
             steps {
-                lock("satis-rebuild-resource") {
-                    dir("/data/automation/github/silkworm") {
-                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
-                    }
+                script {
+                    sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
                 }
             }
         }
-        stage("Run Silkworm") {
+        stage("Checkout DAC") {
             steps {
-                lock("satis-rebuild-resource") {
-                    timeout(time: 5, unit: "MINUTES") {
-                        retry(2) {
-                            dir("/data/automation/bitbucket/desso-automation-conf/scripts/plugin") {
-                                sh "./silkworm.sh"
-                            }
-                        }
-                    }
+                checkout scmGit(
+                    branches: [[name: 'main']],
+                    userRemoteConfigs: [[credentialsId: 'DES-Project', url: 'https://bitbucket.org/bc-gov/desso-automation-conf.git']]
+                )
+            }
+        }
+        stage('Run Silkworm') {
+            steps {
+                script {
+                    sh './scripts/plugin/silkworm.sh'
                 }
             }
         }
