@@ -17,7 +17,7 @@ Before building the application, change the values of the `temp`, `tokens`, `rep
 ``` go
 temp     string = "/data/automation/temp/"
 tokens   string = "/data/automation/tokens/"
-repos    string = "/data/automation/bitbucket/"
+repos    string = "/data/automation/checkouts/"
 config   string = "desso-automation-conf/atlassian/"
 ```
 

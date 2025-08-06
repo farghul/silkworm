@@ -90,7 +90,7 @@ const (
 	header   string = "\nh2. Changelog\n"
 	temp     string = "/data/automation/temp/"
 	tokens   string = "/data/automation/tokens/"
-	repos    string = "/data/automation/bitbucket/"
+	repos    string = "/data/automation/checkouts/"
 	config   string = "desso-automation-conf/jsons/"
 )
 
