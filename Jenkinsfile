@@ -43,9 +43,9 @@ pipeline {
         }
         stage('Run_Silkworm') {
             steps {
-                dir('/data/automation/checkouts/dac'){
+                dir('/data/automation/checkouts/dac/scripts/plugin'){
                     script {
-                        sh './scripts/plugin/silkworm.sh'
+                        sh './silkworm.sh'
                     }
                 }
             }
