@@ -52,7 +52,7 @@ func engine(entry string) {
 
 // Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
 func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql="+jira.Summary+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
+	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search/jql?jql="+jira.Summary+ticket, "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
 	err := json.Unmarshal(result, &sre)
 	inspect(err)
 }
