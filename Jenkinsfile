@@ -9,43 +9,39 @@ pipeline {
         )
     }
     stages {
-        stage("Empty_Folder") {
+        stage("Clear") {
             steps {
-                dir('/data/automation/checkouts'){
+                dir("/data/automation/checkouts"){
                     script {
                         deleteDir()
                     }
                 }
             }
         }
-        stage('Checkout_Silkworm'){
+        stage("Checkouts"){
             steps{
-                dir('/data/automation/checkouts/silkworm'){
-                    git url: 'https://github.com/farghul/silkworm.git' , branch: 'main'
+                dir("/data/automation/checkouts/silkworm"){
+                    git url: "https://github.com/farghul/silkworm.git", branch: "main"
+                }
+                dir("/data/automation/checkouts/dac"){
+                    git credentialsId: "DES-Project", url: "https://bitbucket.org/bc-gov/desso-automation-conf.git", branch: "main"
                 }
             }
         }
-        stage('Build_Silkworm') {
+        stage("Build") {
             steps {
-                dir('/data/automation/checkouts/silkworm'){
+                dir("/data/automation/checkouts/silkworm"){
                     script {
                         sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
                     }
                 }
             }
         }
-        stage("Checkout_DAC") {
-            steps{
-                dir('/data/automation/checkouts/dac'){
-                    git credentialsId: 'DES-Project', url: 'https://bitbucket.org/bc-gov/desso-automation-conf.git', branch: 'main'
-                }
-            }
-        }
-        stage('Run_Silkworm') {
+        stage("Run") {
             steps {
-                dir('/data/automation/checkouts/dac/scripts/plugin'){
+                dir("/data/automation/checkouts/dac/scripts/plugin"){
                     script {
-                        sh './silkworm.sh'
+                        sh "./silkworm.sh"
                     }
                 }
             }
