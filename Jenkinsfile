@@ -32,7 +32,7 @@ pipeline {
             steps {
                 dir("/data/automation/checkouts/silkworm"){
                     script {
-                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
+                        sh "go build -o /data/automation/bin/silkworm"
                     }
                 }
             }
