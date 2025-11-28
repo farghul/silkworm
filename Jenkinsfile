@@ -2,9 +2,9 @@ pipeline {
     agent { label "cactuar && deploy" }
     options {
         buildDiscarder logRotator(
-            artifactDaysToKeepStr: "28",
-            artifactNumToKeepStr: "5",
-            daysToKeepStr: "56",
+            artifactDaysToKeepStr: "",
+            artifactNumToKeepStr: "10",
+            daysToKeepStr: "",
             numToKeepStr: "10"
         )
     }
@@ -32,14 +32,14 @@ pipeline {
             steps {
                 dir("/data/automation/checkouts/silkworm"){
                     script {
-                        sh "go build -o /data/automation/bin/silkworm"
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/silkworm"
                     }
                 }
             }
         }
         stage("Run") {
             steps {
-                dir("/data/automation/checkouts/dac/scripts/plugin"){
+                dir("/data/automation/checkouts/silkworm"){
                     script {
                         sh "./silkworm.sh"
                     }
