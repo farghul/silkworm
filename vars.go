@@ -91,7 +91,7 @@ const (
 	temp     string = "/data/automation/temp/"
 	tokens   string = "/data/automation/tokens/"
 	repos    string = "/data/automation/checkouts/"
-	config   string = "desso-automation-conf/jsons/"
+	config   string = "dac/jsons/"
 )
 
 var (
