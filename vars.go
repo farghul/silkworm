@@ -35,7 +35,7 @@ type Desso struct {
 	} `json:"issues"`
 }
 
-// Filters builds the parameters for sed to execute on the scrapped.txt file
+// Filters builds the parameters for sed to execute on the scrape.txt file
 type Filters struct {
 	OPH2  string `json:"oph2"`
 	OPH3  string `json:"oph3"`
