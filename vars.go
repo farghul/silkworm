@@ -107,7 +107,7 @@ var (
 	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
-	persistent = []string{repos + config + "changelogs.json", repos + config + "filters.json", repos + config + "jira.json", repos + config + "template.json", tokens + "tokens.json"}
+	persistent = []string{repos + config + "changelogs.json", repos + config + "filters.json", repos + config + "jira.json", repos + config + "template-plugins.json", tokens + "tokens.json"}
 	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
