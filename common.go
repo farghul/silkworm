@@ -6,7 +6,7 @@ import (
 	"os/exec"
 )
 
-// Test for a proper flag
+// Test for too few arguments
 func flags() string {
 	var flag string
 

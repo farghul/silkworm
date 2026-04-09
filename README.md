@@ -15,10 +15,9 @@ A variety of json files to enable ticket creation, authorized querying, and chan
 Before building the application, change the values of these constants to reflect your environment:
 
 ``` go
+meta     string = "/data/automation/jsons/"
 temp     string = "/data/automation/temp/"
 tokens   string = "/data/automation/tokens/"
-repos    string = "/data/automation/checkouts/"
-config   string = "desso-automation-conf/atlassian/"
 ```
 
 Then, from the root folder containing `main.go`, use the command that matches your environment:

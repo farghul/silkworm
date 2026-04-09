@@ -88,10 +88,9 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted"
 	header   string = "\nh2. Changelog\n"
+	meta     string = "/data/automation/jsons/"
 	temp     string = "/data/automation/temp/"
 	tokens   string = "/data/automation/tokens/"
-	repos    string = "/data/automation/checkouts/"
-	config   string = "dac/jsons/"
 )
 
 var (
@@ -107,7 +106,7 @@ var (
 	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
-	persistent = []string{repos + config + "changelogs.json", repos + config + "filters.json", repos + config + "jira.json", repos + config + "template-plugins.json", tokens + "tokens.json"}
+	persistent = []string{meta + "changelogs.json", meta + "filters.json", meta + "jira.json", meta + "template-plugins.json", tokens + "tokens.json"}
 	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
