@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "issuetype": {
+            "name": "IssueType name"
+        },
+        "labels": [
+            "Tag 1",
+            "Tag 2"
+        ],
+        "reporter": {
+            "accountId": "Reporters account ID"
+        },
+        "project": {
+            "key": "Project short name"
+        },
+        "description": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+                {
+                    "type": "paragraph",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "A longer and more detailed explanation of the purpose and goals of the ticket."
+                        }
+                    ]
+                }
+            ]
+        },
+        "summary": "Short, descriptive title for the new ticket.",
+        "priority": {
+            "id": "Priority ID"
+        }
+    }
+}

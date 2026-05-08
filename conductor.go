@@ -35,8 +35,24 @@ func engine(entry string) {
 			switchboard()
 			changelog := append([]byte(header), content...)
 
+			description := ADFDoc{
+				Type:    "doc",
+				Version: 1,
+				Content: []ADFBlock{
+					{
+						Type: "paragraph",
+						Content: []ADFInline{
+							{
+								Type: "text",
+								Text: string(changelog),
+							},
+						},
+					},
+				},
+			}
+
 			/* Create Jira ticket using Description & Summary */
-			post.Fields.Description = string(changelog)
+			post.Fields.Description = description
 			post.Fields.Summary = entry
 			body, _ := json.Marshal(post)
 			execute("-v", "curl", "-H", "Authorization: Basic "+token.Jira, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")

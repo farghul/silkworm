@@ -48,35 +48,50 @@ type Filters struct {
 	Event string `json:"event"`
 }
 
-// Posts builds the ticket information to send to Jira
-type Posts struct {
-	Fields struct {
-		Issuetype struct {
-			Self string `json:"self"`
-			ID   string `json:"id"`
-			Name string `json:"name"`
-		} `json:"issuetype"`
-		Labels   []string `json:"labels"`
-		Reporter struct {
-			Self         string `json:"self"`
-			AccountID    string `json:"accountId"`
-			EmailAddress string `json:"emailAddress"`
-		} `json:"reporter"`
-		Project struct {
-			Self           string `json:"self"`
-			ID             string `json:"id"`
-			Key            string `json:"key"`
-			Name           string `json:"name"`
-			ProjectTypeKey string `json:"projectTypeKey"`
-		} `json:"project"`
-		Description string `json:"description"`
-		Summary     string `json:"summary"`
-		Priority    struct {
-			Self string `json:"self"`
-			ID   string `json:"id"`
-			Name string `json:"name"`
-		} `json:"priority"`
-	} `json:"fields"`
+type JiraIssueRequest struct {
+	Fields Fields `json:"fields"`
+}
+
+type Fields struct {
+	IssueType   IssueType `json:"issuetype"`
+	Labels      []string  `json:"labels,omitempty"`
+	Reporter    Reporter  `json:"reporter,omitempty"`
+	Project     Project   `json:"project"`
+	Description ADFDoc    `json:"description"`
+	Summary     string    `json:"summary"`
+	Priority    Priority  `json:"priority,omitempty"`
+}
+
+type IssueType struct {
+	ID string `json:"id"`
+}
+
+type Reporter struct {
+	AccountID string `json:"accountId"`
+}
+
+type Project struct {
+	Key string `json:"key"`
+}
+
+type Priority struct {
+	ID string `json:"id"`
+}
+
+type ADFDoc struct {
+	Type    string     `json:"type"`    // "doc"
+	Version int        `json:"version"` // 1
+	Content []ADFBlock `json:"content"`
+}
+
+type ADFBlock struct {
+	Type    string      `json:"type"` // "paragraph"
+	Content []ADFInline `json:"content"`
+}
+
+type ADFInline struct {
+	Type string `json:"type"` // "text"
+	Text string `json:"text"`
 }
 
 const (
@@ -95,7 +110,7 @@ const (
 
 var (
 	sre        Desso
-	post       Posts
+	post       JiraIssueRequest
 	label      string
 	repo       string
 	version    string
@@ -106,7 +121,7 @@ var (
 	changelog  Changelogs
 	versions   = [1][2]string{{".", "-"}}
 	ephemeral  = []string{temp + "grep.txt", temp + "scrape.txt"}
-	persistent = []string{meta + "changelogs.json", meta + "filters.json", meta + "jira.json", meta + "template-plugins.json", tokens + "tokens.json"}
+	persistent = []string{meta + "changelogs.json", meta + "filters.json", meta + "jira.json", meta + "ticket.json", tokens + "tokens.json"}
 	deletions  = []string{
 		"<header>", "</header>",
 		"</div>", "<p>", "</p>",
