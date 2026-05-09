@@ -3,6 +3,9 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"io"
+	"log"
+	"net/http"
 	"strings"
 )
 
@@ -18,121 +21,104 @@ func sifter() {
 }
 
 // Iterate through the updates array and assign plugin and ticket values
-func engine(entry string) {
-	if len(entry) > 25 {
+func engine(summary string) {
+	if len(summary) > 25 {
+		firstsplit := strings.Split(summary, "/")
+		repo := firstsplit[0]
+		secondsplit := strings.Split(firstsplit[1], ":")
+		label := secondsplit[0]
+		version := secondsplit[1]
 
-		/* See if the ticket already exists */
-		firstsplit := strings.Split(entry, "/")
-		apiget(firstsplit[1])
+		switchboard(repo, label, version)
+		changelog := append([]byte(header), content...)
 
-		/* If not, create it */
-		if len(sre.Issues) == 0 {
-			repo = firstsplit[0]
-			secondsplit := strings.Split(firstsplit[1], ":")
-			label = secondsplit[0]
-			version = secondsplit[1]
+		adf, err := converter(string(changelog))
+		inspect(err)
 
-			switchboard()
-			changelog := append([]byte(header), content...)
+		description := ADFDoc{adf.Type, adf.Version, adf.Content}
 
-			description := ADFDoc{
-				Type:    "doc",
-				Version: 1,
-				Content: []ADFBlock{
-					{
-						Type: "paragraph",
-						Content: []ADFInline{
-							{
-								Type: "text",
-								Text: string(changelog),
-							},
-						},
-					},
-				},
-			}
-
-			/* Create Jira ticket using Description & Summary */
-			post.Fields.Description = description
-			post.Fields.Summary = entry
-			body, _ := json.Marshal(post)
-			execute("-v", "curl", "-H", "Authorization: Basic "+token.Jira, "-X", "POST", "--data", string(body), "-H", "Content-Type: application/json", jira.URL+"issue")
-
-			/* Get the new DESSO key and log the ticket creation */
-			apiget(firstsplit[1])
-			inform("Jira ticket " + sre.Issues[0].Key + " created.")
-		} else {
-			inform("Jira ticket " + sre.Issues[0].Key + " already exists.")
-		}
+		/* Create a new Jira ticket using Description & Summary */
+		post.Fields.Description = description
+		post.Fields.Summary = summary
+		body, _ := json.Marshal(post)
+		spawn(body)
 	}
-}
-
-// Grab the ticket information from Jira in order to extract the DESSO-XXXX identifier
-func apiget(ticket string) {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+jira.Criteria+ticket+"&fields=key&maxResults=1", "--header", "Authorization: Basic "+token.Jira, "--header", "Accept: application/json")
-	err := json.Unmarshal(result, &sre)
-	inspect(err)
 }
 
 // Sort the query based on repository name
-func switchboard() {
+func switchboard(repo, label, version string) {
 	switch repo {
 	case "premium-plugin":
-		premium(label)
+		premium(label, version)
 	case "freemius":
-		substitution(changelog.Spotlight, filter.OPH2+"v"+version+filter.ESP)
+		webscrape(changelog.Spotlight, filter.OPH2+"v"+version+filter.ESP)
 	case "wpengine":
-		substitution(changelog.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
+		webscrape(changelog.WordPress+"advanced-custom-fields/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", ephemeral[0])
 	default:
-		substitution(changelog.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
+		webscrape(changelog.WordPress+label+"/#developers", "/Changelog"+filter.CLH2)
 		content = execute("-c", "sed", "1d", ephemeral[0])
 	}
 }
 
-// Apply special conditions to the premium in-house plugins
-func premium(label string) {
-	v := bytes.ReplaceAll([]byte(version), []byte(versions[0][0]), []byte(versions[0][1]))
-	switch label {
-	case "events-calendar-pro":
-		substitution(changelog.Calendar+string(v)+"/", "/"+version+filter.Event)
-		eventfilter()
-	case "event-tickets-plus":
-		substitution(changelog.Tickets+string(v)+"/", "/"+version+filter.Event)
-		eventfilter()
-	case "events-virtual":
-		substitution(changelog.Virtual+string(v)+"/", "/"+version+filter.Event)
-		eventfilter()
-	case "gravityforms":
-		substitution(changelog.Gravity, filter.OPH3+version+filter.End)
-	case "polylang-pro":
-		substitution(changelog.Poly, filter.OPH4+version+filter.End)
-	case "wp-all-export-pro":
-		substitution(changelog.WPExport, "/"+version+filter.CLH4)
-		content = execute("-c", "sed", "${/h3./d;}", ephemeral[0])
-	}
-}
-
-// Find and replace/delete html tags
-func substitution(link, filter string) {
+func webscrape(link, filter string) {
 	execute("-v", "curl", "-s", link, "-o", ephemeral[1])
 	grep := execute("-c", "sed", "-n", filter, ephemeral[1])
-	for _, v := range deletions {
-		replace := bytes.ReplaceAll(grep, []byte(v), []byte(""))
-		grep = replace
-	}
-	for i := range len(replacements) {
-		replace := bytes.ReplaceAll(grep, []byte(replacements[i][0]), []byte(replacements[i][1]))
-		grep = replace
-	}
 	document(ephemeral[0], grep)
 	content = execute("-c", "sed", "/^$/d ; s/	//g", ephemeral[0])
 	document(ephemeral[0], content)
 }
 
+// Apply special conditions to the premium in-house plugins
+func premium(label, version string) {
+	v := bytes.ReplaceAll([]byte(version), []byte(versions[0][0]), []byte(versions[0][1]))
+	switch label {
+	case "events-calendar-pro":
+		webscrape(changelog.Calendar+string(v)+"/", "/"+version+filter.Event)
+		eventfilter(version)
+	case "event-tickets-plus":
+		webscrape(changelog.Tickets+string(v)+"/", "/"+version+filter.Event)
+		eventfilter(version)
+	case "events-virtual":
+		webscrape(changelog.Virtual+string(v)+"/", "/"+version+filter.Event)
+		eventfilter(version)
+	case "gravityforms":
+		webscrape(changelog.Gravity, filter.OPH3+version+filter.End)
+	case "polylang-pro":
+		webscrape(changelog.Poly, filter.OPH4+version+filter.End)
+	case "wp-all-export-pro":
+		webscrape(changelog.WPExport, "/"+version+filter.CLH4)
+		content = execute("-c", "sed", "${/h3./d;}", ephemeral[0])
+	}
+}
+
 // Special filter to handle the Events Calendar suite of updates
-func eventfilter() {
+func eventfilter(version string) {
 	content = execute("-c", "grep", "-v", "<", ephemeral[0])
 	document(ephemeral[0], content)
 	content = execute("-c", "sed", "1,3d", ephemeral[0])
 	content = append([]byte("h3. "+version+"\n"), content...)
+}
+
+// Send a POST request to the Jira API
+func spawn(body []byte) {
+	req, _ := http.NewRequest("POST", jira.URL+"issue", bytes.NewBuffer(body))
+	req.Header.Set("Authorization", "Basic "+jira.Token)
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, _ := http.DefaultClient.Do(req)
+
+	if resp.StatusCode != 201 {
+		body, _ := io.ReadAll(resp.Body)
+		log.Fatalf("Jira error: %s", body)
+	}
+
+	var result Response
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		inspect(err)
+	} else {
+		inform("Jira ticket " + result.Key + " created.")
+	}
+
+	defer resp.Body.Close()
 }
