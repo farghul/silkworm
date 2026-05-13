@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -81,6 +82,16 @@ func read(file string) []byte {
 	outcome, problem := os.ReadFile(file)
 	inspect(problem)
 	return outcome
+}
+
+// Println function for colourized text
+func (c Color) Println(text string) {
+	fmt.Println(string(c) + text + Reset)
+}
+
+// Printf function for colourized text
+func (c Color) Printf(format string, a ...any) {
+	fmt.Printf(string(c)+format+Reset, a...)
 }
 
 // Record a list of files in a folder
